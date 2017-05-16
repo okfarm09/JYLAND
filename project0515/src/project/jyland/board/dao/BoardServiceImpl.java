@@ -60,5 +60,12 @@ public class BoardServiceImpl implements BoardService {
 	public void writeBoard(JYBoard board) {
 		boardDao.writeBoard(board);
 	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYBoard> getRecentList() {
+		return boardDao.getRecentList();
+	}
+
 
 }

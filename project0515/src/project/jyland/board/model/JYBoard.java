@@ -22,6 +22,8 @@ public class JYBoard implements Serializable {
 	private String ip;
 	private int regionid;
 	private int commentcount;
+	private String catname;
+	private String dateForMain;
 	
 	public JYBoard() {
 		super();
@@ -45,7 +47,8 @@ public class JYBoard implements Serializable {
 		this.regionid = regionid;
 	}
 	public JYBoard(int seq, String id, String title, String content, String location, int readcount, int likecount,
-			int hatecount, Date wdate, String upload, int catid, int del, String ip, int regionid, int commentcount) {
+			int hatecount, Date wdate, String upload, int catid, int del, String ip, int regionid, int commentcount,
+			String catname) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -62,6 +65,7 @@ public class JYBoard implements Serializable {
 		this.ip = ip;
 		this.regionid = regionid;
 		this.commentcount = commentcount;
+		this.catname = catname;
 	}
 	public JYBoard(String id, String title, String content, String location, String upload, int catid, String ip,
 			int regionid) {
@@ -88,7 +92,7 @@ public class JYBoard implements Serializable {
 		return "JYBoard [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", location="
 				+ location + ", readcount=" + readcount + ", likecount=" + likecount + ", hatecount=" + hatecount
 				+ ", wdate=" + wdate + ", upload=" + upload + ", catid=" + catid + ", del=" + del + ", ip=" + ip
-				+ ", regionid=" + regionid + "]";
+				+ ", regionid=" + regionid + ", commentcount=" + commentcount + ", catname=" + catname + "]";
 	}
 	public int getSeq() {
 		return seq;
@@ -179,6 +183,18 @@ public class JYBoard implements Serializable {
 	}
 	public void setCommentcount(int commentcount) {
 		this.commentcount = commentcount;
+	}
+	public String getCatname() {
+		return catname;
+	}
+	public void setCatname(String catname) {
+		this.catname = catname;
+	}
+	public String getDateForMain() {
+		return dateForMain;
+	}
+	public void setDateForMain(String dateForMain) {
+		this.dateForMain = dateForMain;
 	}
 	
 	
