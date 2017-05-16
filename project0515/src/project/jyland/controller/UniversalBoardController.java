@@ -80,9 +80,9 @@ public class UniversalBoardController {
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
 		// 리눅스용 경로
-//		String fupload = "/home/namo/ho2/etc/project/git/project/JYLAND/project0515/WebContent/upload";
+		String fupload = "/home/namo/ho2/etc/project/git/project/JYLAND/project0515/WebContent/upload";
 		// ntfs에서는(현준)
-		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
+//		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		// 지윤이
 		//String fupload = "C:\\Java\\project\\project\\WebContent\\upload";
 		logger.info(": " + fupload);
