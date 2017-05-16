@@ -56,4 +56,8 @@ public class BoardDaoImpl implements BoardDao {
 		sqlSession.insert(ns+"writeBoard", board);
 	}
 
+	@Override
+	public List<JYBoard> getRecentList() {
+		return sqlSession.selectList(ns+"getRecentList");
+	}
 }
