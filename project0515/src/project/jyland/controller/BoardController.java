@@ -141,9 +141,9 @@ public class BoardController {
 		// 지윤
 		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
 		// ntfs에서는(현준)
-		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
+		//String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		//남희석요
-		//String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
 		//원찬
 		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		String newFile = FUpUtil.getNewFile(f);
