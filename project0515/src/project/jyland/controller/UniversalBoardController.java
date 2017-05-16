@@ -142,7 +142,7 @@ public class UniversalBoardController {
 		// ntfs에서는(현준)
 		//String fupload = "C:\\Users\\Jermy\\workspace\\workspace2_0508\\project0512\\WebContent\\upload";
 		//남희석요
-		String fupload = "/home/namo/ho2/workspaces/workspace3/project0512/WebContent/upload";
+		String fupload = "/home/namo/ho2/etc/project/git/project/JYLAND/project0515/WebContent/upload";
 		String newFile = FUpUtil.getNewFile(f);
 		logger.info(fupload + "/" + newFile);
 		if(newFile.contains("back")) {
