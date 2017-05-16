@@ -26,16 +26,16 @@ import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
 
 @Controller
-public class UniversalBoardController {
+public class BoardController {
 	
 	private static final Logger logger =
-			LoggerFactory.getLogger(UniversalBoardController.class);
+			LoggerFactory.getLogger(BoardController.class);
 	@Autowired
 	private BoardService boardService;
 	
 	@RequestMapping(value = "board.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String board(JYBoardParam param, Model model) throws Exception {
-		logger.info("Welcome UniversalBoardController board! " + new Date());
+		logger.info("Welcome BoardController board! " + new Date());
 
 		int sn = param.getPageNumber();
 		int start = (sn) * param.getRecordCountPerPage() + 1;
@@ -43,13 +43,13 @@ public class UniversalBoardController {
 
 		param.setStart(start);
 		param.setEnd(end);
-		logger.info("Welcome UniversalBoardController board param! " + param);
+		logger.info("Welcome BoardController board param! " + param);
 
 		int totalRecordCount = boardService.getBoardTotalCount(param);
-		logger.info("Welcome UniversalBoardController board totalRecordCount! " + totalRecordCount);
+		logger.info("Welcome BoardController board totalRecordCount! " + totalRecordCount);
 
 		List<JYBoard> boardlist = boardService.getBoardPageList(param);
-		logger.info("Welcome UniversalBoardController board list! " + boardlist.size());
+		logger.info("Welcome BoardController board list! " + boardlist.size());
 
 		model.addAttribute("doc_title", boardService.getCatName(param.getCatid()));
 		model.addAttribute("boardlist", boardlist);
@@ -65,7 +65,7 @@ public class UniversalBoardController {
 	
 	@RequestMapping(value = "boardwrite.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String boardwrite(int catid, Model model) {
-		logger.info("Welcome UniversalBoardController freewritebefore! " + new Date());
+		logger.info("Welcome BoardController freewritebefore! " + new Date());
 		model.addAttribute("catid", catid);
 		model.addAttribute("doc_title", "글쓰기");
 		return "boardwrite.tiles";
@@ -74,18 +74,20 @@ public class UniversalBoardController {
 	@RequestMapping(value = "boardwriteAf.jy", method = { RequestMethod.POST })
 	public String boardwriteAf(JYBoard dto, HttpServletRequest request,
 			@RequestParam(value = "fileload", required = false) MultipartFile fileload, Model model) {
-		logger.info("Welcome UniversalBoardController! " + dto);
+		logger.info("Welcome BoardController! " + dto);
 		dto.setUpload(fileload.getOriginalFilename());
 
-		logger.info("Welcome UniversalBoardController boardwriteAf! " + new Date());
+		logger.info("Welcome BoardController boardwriteAf! " + new Date());
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
 		// 리눅스용 경로
 		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
 		// ntfs에서는(현준)
 //		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
-		// 지윤이
-		//String fupload = "C:\\Java\\project\\project\\WebContent\\upload";
+		// 지윤
+		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
+		//원찬
+		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
 		String tempip = "000.000.000.000";
@@ -93,7 +95,7 @@ public class UniversalBoardController {
 		dto.setIp(tempip);
 		// }
 		String newFile = FUpUtil.getNewFile(f);
-		logger.info("Welcome UniversalBoardController boardwriteAf " + newFile);
+		logger.info("Welcome BoardController boardwriteAf " + newFile);
 
 		logger.info(fupload + "/" + newFile);
 		dto.setUpload(newFile);
@@ -104,16 +106,16 @@ public class UniversalBoardController {
 
 			// db에 저장 안하면 코멘트.
 			boardService.writeBoard(dto);
-			logger.info("Welcome UniversalBoardController boardwriteAf success! ");
+			logger.info("Welcome BoardController boardwriteAf success! ");
 		} catch (IOException e) {
-			logger.info("Welcome UniversalBoardController boardwriteAf fail! ");
+			logger.info("Welcome BoardController boardwriteAf fail! ");
 		}
 		return "redirect:/board.jy?catid="+dto.getCatid();
 	}
 	
 	@RequestMapping(value = "detailupdate.jy", method = RequestMethod.POST)
 	public String detailupdate(JYBoard board, Model model) {
-		logger.info("Welcome UniversalBoardController detailupdate " + new Date());
+		logger.info("Welcome BoardController detailupdate " + new Date());
 		model.addAttribute("original", new JYBoardMap(board));
 		model.addAttribute("doc_title", "수정하기");
 		return "updateboard.tiles";
@@ -121,29 +123,31 @@ public class UniversalBoardController {
 	
 	@RequestMapping(value = "boarddetail.jy", method = { RequestMethod.POST, RequestMethod.GET })
 	public String freedetail(JYBoard board, Model model) {
-		logger.info("Welcome UniversalBoardController boarddetail! ---------------------------------------");
+		logger.info("Welcome BoardController boarddetail! ---------------------------------------");
 		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
 		model.addAttribute("boarddetail", bm);
-		logger.info("Welcome UniversalBoardController boarddetail! " + bm);
+		logger.info("Welcome BoardController boarddetail! " + bm);
 		return "boarddetail.tiles";
 	}
 	
 	@RequestMapping(value = "detailupdateAf", method = RequestMethod.POST)
 	public String detailupdateAf(JYBoard board, String originalFile, HttpServletRequest request,
 			@RequestParam(value = "fileload", required = false) MultipartFile fileload, Model model) {
-		logger.info("Welcome UniversalBoardController detailupdateAf " + new Date());
+		logger.info("Welcome BoardController detailupdateAf " + new Date());
 		String catprep=boardService.getCatPrep(board.getCatid());
-		logger.info("Welcome UniversalBoardController detailupdateAf " + catprep);
+		logger.info("Welcome BoardController detailupdateAf " + catprep);
 		board.setUpload(fileload.getOriginalFilename());
 		String f=board.getUpload();
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
-		// 지윤이
-		//String fupload = "C:\\Java\\project\\project\\WebContent\\upload";
+		// 지윤
+		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
 		// ntfs에서는(현준)
 		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		//남희석요
 		//String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		//원찬
+		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		String newFile = FUpUtil.getNewFile(f);
 		logger.info(fupload + "/" + newFile);
 		if(newFile.contains("back")) {
@@ -154,16 +158,16 @@ public class UniversalBoardController {
 			File file = new File(fupload + "/" + board.getUpload());
 			FileUtils.writeByteArrayToFile(file, fileload.getBytes());
 			boardService.updateBoard(board);
-			logger.info("Welcome UniversalBoardController detailupdateAf success! ");
+			logger.info("Welcome BoardController detailupdateAf success! ");
 		} catch (IOException e) {
-			logger.info("Welcome UniversalBoardController detailupdateAf fail! ");
+			logger.info("Welcome BoardController detailupdateAf fail! ");
 		}
 		return "redirect:/"+catprep+"detail.jy?seq="+board.getSeq();
 	}
 	
 	@RequestMapping(value = "detaildelete", method=RequestMethod.POST)
 	public String detaildelete(JYBoard board, Model model) {
-		logger.info("Welcome UniversalBoardController detaildelete " + new Date());
+		logger.info("Welcome BoardController detaildelete " + new Date());
 		String catprep=boardService.getCatPrep(board.getCatid());
 		boardService.deleteBoard(board);
 		return "redirect:/"+catprep+"board.jy";
@@ -171,7 +175,7 @@ public class UniversalBoardController {
 	
 	@RequestMapping(value = "deleteMylist.jy", method=RequestMethod.POST)
 	public String deleteMylist(JYBoard board, Model model) {
-		logger.info("Welcome UniversalBoardController deleteMylist " + new Date());
+		logger.info("Welcome BoardController deleteMylist " + new Date());
 		logger.info("Welcome FreeCommentController deleteComment " + board);
 		boardService.deleteBoard(board);
 		return "redirect:/mylist.jy?id="+board.getId();
@@ -180,7 +184,7 @@ public class UniversalBoardController {
 	@RequestMapping(value = "getdel.jy", method={RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody JYBoard getdel(JYBoard board, Model model) {
 		
-		logger.info("Welcome UniversalBoardController getDel " + new Date());
+		logger.info("Welcome BoardController getDel " + new Date());
 		JYBoard bb= boardService.getBoard(board);
 		return bb;
 	}
