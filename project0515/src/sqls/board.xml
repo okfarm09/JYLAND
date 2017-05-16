@@ -13,13 +13,6 @@ VALUES(JY_BOARD_SEQ.NEXTVAL, #{id}, #{title}, #{content},
 #{location}, 0, 0, 0, SYSDATE, #{upload}, #{catid}, 0, #{ip}, #{regionid})
 </insert>
 
-<select id="getCatPrep"
-parameterType="java.lang.Integer"
-resultType="java.lang.String">
-SELECT CATPREP FROM JYCAT
-WHERE CATID=#{catid}
-</select>
-
 <select id="getCatName"
 parameterType="java.lang.Integer"
 resultType="java.lang.String">

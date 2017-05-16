@@ -134,8 +134,6 @@ public class BoardController {
 	public String detailupdateAf(JYBoard board, String originalFile, HttpServletRequest request,
 			@RequestParam(value = "fileload", required = false) MultipartFile fileload, Model model) {
 		logger.info("Welcome BoardController detailupdateAf " + new Date());
-		String catprep=boardService.getCatPrep(board.getCatid());
-		logger.info("Welcome BoardController detailupdateAf " + catprep);
 		board.setUpload(fileload.getOriginalFilename());
 		String f=board.getUpload();
 		// 실제 서버용
@@ -162,15 +160,14 @@ public class BoardController {
 		} catch (IOException e) {
 			logger.info("Welcome BoardController detailupdateAf fail! ");
 		}
-		return "redirect:/"+catprep+"detail.jy?seq="+board.getSeq();
+		return "redirect:/boarddetail.jy?seq="+board.getSeq();
 	}
 	
 	@RequestMapping(value = "detaildelete", method=RequestMethod.POST)
 	public String detaildelete(JYBoard board, Model model) {
 		logger.info("Welcome BoardController detaildelete " + new Date());
-		String catprep=boardService.getCatPrep(board.getCatid());
 		boardService.deleteBoard(board);
-		return "redirect:/"+catprep+"board.jy";
+		return "redirect:/board.jy";
 	}
 	
 	@RequestMapping(value = "deleteMylist.jy", method=RequestMethod.POST)

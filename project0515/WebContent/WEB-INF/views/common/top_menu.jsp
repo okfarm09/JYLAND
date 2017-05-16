@@ -6,7 +6,7 @@
 <div class="menu">
 	<ul class="menu_list">
 		<li><span class="top_lists" onclick="url_board(1);">자유게시판</span></li>
-		<li><span class="top_lists">게시판2</span></li>
+		<li><span class="top_lists" onclick="url_board(2);">토론게시판</span></li>
 		<li><span class="top_lists">게시판3</span></li>
 		<li><span class="top_lists">게시판4</span></li>
 		<li><span class="top_lists">게시판5</span></li>

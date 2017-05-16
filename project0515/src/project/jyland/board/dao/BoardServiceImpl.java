@@ -29,12 +29,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public String getCatPrep(int catid) {
-		return boardDao.getCatPrep(catid);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
 	public JYBoard getBoard(JYBoard board) {
 		return boardDao.getBoard(board);
 	}

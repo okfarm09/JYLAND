@@ -27,11 +27,6 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public String getCatPrep(int catid) {
-		return sqlSession.selectOne(ns+"getCatPrep", catid);
-	}
-
-	@Override
 	public JYBoard getBoard(JYBoard board) {
 		return sqlSession.selectOne(ns+"getBoard", board);
 	}

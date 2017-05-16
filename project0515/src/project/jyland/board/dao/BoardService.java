@@ -10,7 +10,6 @@ public interface BoardService {
 	void writeBoard(JYBoard board);
 	void updateBoard(JYBoard board);
 	void deleteBoard(JYBoard board);
-	String getCatPrep(int catid);
 	String getCatName(int catid);
 	JYBoard getBoard(JYBoard board);
 	List<JYBoard> getBoardPageList(JYBoardParam param);
