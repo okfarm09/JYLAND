@@ -50,6 +50,7 @@
 						<td><span class="hover_cursor" onclick="url_user_info('${list.id}')">${list.id}</span></td>
 						<td>${list.wdate}</td>
 						<td>${list.readcount}</td>
+						<td><i class='fa fa-times hover_cursor' onclick="delete_comment('${list.seq}')"></i></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -66,4 +67,25 @@
 		</div>
 	</div>
 </div>
+<script>
+ function delete_comment(seq) {
+	 alert("안 돼 못 지워줘 돌아가 "+seq);
+	 $.ajax({
+		 url: "deleteMylist.jy",
+		 type : 'POST',
+		 data: {
+			 seq : seq,
+			 id:"${login.id}"
+		 },
+		 success: function(data) {
+			 console.log("ssssssssssssssssssssssssssssssss");
+			 url_mylist('${login.id}');
+		 },
+		 error : function() {
+			 console.log(seq);
+			 console.log("dddddddddddddddddddddddddddddddd");
+		 }
+	 });
+ }
+ </script>
 

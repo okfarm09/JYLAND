@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import project.jyland.board.dao.BoardService;
@@ -166,6 +167,22 @@ public class UniversalBoardController {
 		String catprep=boardService.getCatPrep(board.getCatid());
 		boardService.deleteBoard(board);
 		return "redirect:/"+catprep+"board.jy";
+	}
+	
+	@RequestMapping(value = "deleteMylist.jy", method=RequestMethod.POST)
+	public String deleteMylist(JYBoard board, Model model) {
+		logger.info("Welcome UniversalBoardController deleteMylist " + new Date());
+		logger.info("Welcome FreeCommentController deleteComment " + board);
+		boardService.deleteBoard(board);
+		return "redirect:/mylist.jy?id="+board.getId();
+	}
+	
+	@RequestMapping(value = "getdel.jy", method={RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody JYBoard getdel(JYBoard board, Model model) {
+		
+		logger.info("Welcome UniversalBoardController getDel " + new Date());
+		JYBoard bb= boardService.getBoard(board);
+		return bb;
 	}
 
 }

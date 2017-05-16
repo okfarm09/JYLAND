@@ -9,6 +9,10 @@
 	width: 300px;
 	height: 300px;
 }
+.oridel:hover {
+	cursor: pointer;
+	color : gray;
+}
 -->
 </style>
 <div class="boarddetail_wrap">
@@ -41,22 +45,21 @@
 				</c:if>
 				<c:forEach items="${mycomment}" var="comment" varStatus="vs">
 					<tr class="_hover_tr">
-						<c:if test="${comment.delflag eq 1}">
-							<td>${fn:length(mycomment)-vs.count+1}</td>
-							<td colspan="5">삭제된 댓글입니다.</td>
-						</c:if>
-						<c:if test="${comment.delflag eq 0}">
-							<td>${fn:length(mycomment)-vs.count+1}</td>
-							<td style="text-align: left"><a
-								href="boarddetail.jy?seq=${comment.boardseq}">${comment.content}
-							</a></td>
-
-							<td>${comment.id }</td>
-							<td>${comment.wdate}</td>
-							<td>${comment.likecount}</td>
-							<td>${comment.hatecount}</td>
-							<td><i class='fa fa-times hover_cursor'
-								onclick="delete_comment('${comment.seq}', '${comment.boardseq}')"></i></td>
+					<c:if test="${comment.delflag eq 1}">
+					<td>${fn:length(mycomment)-vs.count+1}</td>
+					<td colspan="5">삭제된 댓글입니다. </td>
+					</c:if>
+					<c:if test="${comment.delflag eq 0}">
+						<td>${fn:length(mycomment)-vs.count+1}</td>
+						<td style="text-align: left">
+							<p onclick="oridel('${comment.boardseq}')" class="oridel">${comment.content}</p>
+						</td>
+						
+						<td>${comment.id }</td>
+						<td>${comment.wdate}</td>
+						<td>${comment.likecount}</td>
+						<td>${comment.hatecount}</td>
+						<td><i class='fa fa-times hover_cursor' onclick="delete_comment('${comment.seq}', '${comment.boardseq}')"></i></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -75,17 +78,44 @@
 	<!-- 	</div> -->
 </div>
 <script>
-	function delete_comment(seq, boardseq) {
-		alert("안 돼 못 지워줘 돌아가 " + seq + " " + boardseq);
-		$.ajax({
-			url : "deleteComment.jy",
-			data : {
-				boardseq : boardseq,
-				seq : seq
-			},
-			success : function(data) {
-				url_mycomment('${login.id}');
+ function delete_comment(seq, boardseq) {
+	 alert("안 돼 못 지워줘 돌아가 "+seq+" "+boardseq);
+	 $.ajax({
+		 url: "deleteComment.jy",
+		 data: {
+			 boardseq : boardseq,
+			 seq : seq
+		 },
+		 success: function(data) {
+			 url_mycomment('${login.id}');
+		 }
+	 });
+ }
+ 
+ function oridel(boardseq){
+	 $.ajax({
+		 url: "getdel.jy",
+		 data: {
+			 'seq' : boardseq
+		 },
+		 type:"POST",
+		 success : function(data) {
+			if(data.del==0) {
+				location.href="boarddetail.jy?seq="+boardseq;
+				
+			} else {
+				alert('삭제 된 놈이야')
 			}
-		});
-	}
-</script>
+		 },
+		 error : function(xhr, status, aaa) {
+			 alert("err")
+			
+		 }
+	 })
+ }
+	  
+	
+ 
+ 
+
+ </script>
