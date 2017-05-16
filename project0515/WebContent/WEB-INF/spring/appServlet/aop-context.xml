@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+ <bean name="logAop" class="project.jyland.aop.LogExcute"/>
+<!-- 로그   -->
+    <aop:config >
+		<aop:pointcut id="servicelogPoint" 
+				expression="execution(public * project.jyland.*.dao.*Dao*.*(..))" />
+		<aop:aspect id="logAop" ref="logAop" >
+			<aop:before method="before" pointcut-ref="servicelogPoint" />
+			<aop:after-returning method="afterReturning" pointcut-ref="servicelogPoint"/>
+			<aop:after-throwing method="daoError" pointcut-ref="servicelogPoint"/>
+		</aop:aspect>
+	</aop:config>
+	
+<!-- <tx:advice id="transactionAdvice" transaction-manager="transactionManager"> -->
+<!-- 		<tx:attributes> -->
+<!-- 			<tx:method name="get*" read-only="true" /> -->
+<!-- 			<tx:method name="*" propagation="REQUIRED" rollback-for="org.springframework.dao.DataAccessException"  /> -->
+<!-- 		</tx:attributes> -->
+<!-- 	</tx:advice> -->
+
+<!-- 	<aop:config proxy-target-class="true"> -->
+<!-- 		<aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.hankyung.boards.model.*Service.*(..))" /> -->
+<!-- 	</aop:config> -->
+
+
+<!-- AOP Transaction 설정 (Annotation) -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>	
+</beans>

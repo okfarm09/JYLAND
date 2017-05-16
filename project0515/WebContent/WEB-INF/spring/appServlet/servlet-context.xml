@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- Enables the Spring MVC @Controller programming model -->
+<annotation-driven />
+<!-- Scan for annotation based controllers -->
+<context:component-scan base-package="project.jyland" />
+<!-- 추가 -->
+<context:annotation-config />	
+<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+<resources mapping="/resources/**" location="/resources/" />
+	<resources location="/WEB-INF/views/css/" mapping="/css/**"/>
+<default-servlet-handler/>
+
+<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="order">
+			<beans:value>2</beans:value>
+		</beans:property>
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+
+<!-- Configure Apache Tiles for the view -->
+
+<beans:bean id="tilesConfigurer"
+	class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	<beans:property name="definitions">
+		<beans:list>
+			<beans:value>/WEB-INF/views/layouts.xml</beans:value>
+		</beans:list>
+	</beans:property>
+</beans:bean>
+	
+<!-- <beans:bean id="downloadView" class="com.mirhenge.jyl.pds.view.DownloadView" /> -->
+<!-- <beans:bean id="excelView" class="com.mirhenge.jyl.pds.view.ExcelBuilder" /> -->
+<!-- <beans:bean id="pdfView" class="com.mirhenge.jyl.pds.view.PDFBuilder" /> -->
+
+	<beans:bean id="downloadViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order">
+			<beans:value>0</beans:value>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="order">
+			<beans:value>1</beans:value>
+		</beans:property>
+		<beans:property name="requestContextAttribute" value="requestContext"/>
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	</beans:bean>
+	
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+	<beans:property name="maxUploadSize" value="104857600"/>
+	<beans:property name="maxInMemorySize" value="102400"/>
+	<beans:property name="defaultEncoding" value="utf-8"/>
+	<beans:property name="uploadTempDir" value="upload"/>
+</beans:bean>
+
+
+      
+<!-- 인터셉터 -->
+<!-- 	<mvc:interceptors> -->
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/**/*" /> -->
+<!-- 			<bean class=""/> -->
+<!-- 		</mvc:interceptor> -->
+<!-- 	</mvc:interceptors>	 -->
+</beans:beans>

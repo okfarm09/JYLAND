@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Comment">
+
+<insert id="writeComment"
+parameterType="project.jyland.comment.model.JYComment">
+INSERT INTO JYCOMMENT(SEQ, ID, CONTENT, BOARDSEQ, WDATE, LIKECOUNT, 
+HATECOUNT, IP, REF, DELFLAG) 
+VALUES(JY_COMMENT_SEQ.NEXTVAL, #{id}, #{content}, #{boardseq}, 
+SYSDATE, 0, 0, #{ip},  
+(SELECT NVL(MAX(REF),0)+1 FROM JYCOMMENT), 0)
+</insert>
+
+<insert id="replyComment"
+parameterType="project.jyland.comment.model.JYComment">
+INSERT INTO JYCOMMENT(SEQ, ID, CONTENT, BOARDSEQ, WDATE, LIKECOUNT, 
+HATECOUNT, IP, REF, SEQREPLY, DELFLAG)
+VALUES(JY_COMMENT_SEQ.NEXTVAL, #{id}, #{content}, #{boardseq}, 
+SYSDATE, 0, 0, #{ip}, 
+(SELECT REF FROM JYCOMMENT WHERE SEQ=#{seqReply}), #{seqReply}, 0)
+</insert>
+
+<select id="getCommentList"
+parameterType="project.jyland.comment.model.JYComment"
+resultType="project.jyland.comment.model.JYComment">
+SELECT SEQ, ID, CONTENT, BOARDSEQ, WDATE, LIKECOUNT, HATECOUNT, IP, SEQREPLY, DELFLAG
+FROM JYCOMMENT WHERE BOARDSEQ=#{boardseq}
+ORDER BY REF ASC, SEQ ASC
+</select>
+
+<update id="deleteComment"
+parameterType="project.jyland.comment.model.JYComment">
+UPDATE JYCOMMENT SET DELFLAG = 1 WHERE SEQ=#{seq}
+</update>
+
+</mapper>

@@ -1,0 +1,9 @@
+function url_home() {self.location.href = "main.jy";  return false;} //메인 페이지
+function url_logout() {self.location.href = "logout.jy"; return false;} //로그아웃
+function url_my_info() {self.location.href = "myinfo.jy"; return false;} //내 정보 보기
+function change_me () {self.location.href = "infochange.jy"; return false;} //내 정보 변경
+function url_user_info(id) {self.location.href = "userinfo.jy?id="+id; return false;} //유저 정보 보기
+function url_mylist(id) {self.location.href = "mylist.jy?id="+id; return false;} //내 글 보기
+function url_mycomment(id) {self.location.href = "mycomment.jy?id="+id; return false;} //내 댓글 보기
+function url_board1() {self.location.href = "freeboard.jy";  return false;} //자유게시판
+function url_freewrite() {self.location.href = "freewrite.jy"; return false;} //자유게시판 글쓰기

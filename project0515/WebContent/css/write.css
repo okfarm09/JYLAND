@@ -1,0 +1,69 @@
+._write_btn:hover {
+	cursor: pointer;
+}
+
+._content:hover {
+ cursor: text;
+}
+
+._map_icon:hover {
+	cursor: pointer;
+}
+
+.write_table {
+	width: 80%;
+	padding: 0 10%;
+}
+
+.write_table span {
+	display: inline-block;
+	width: 10%;
+	background: #4e4e4e;
+	color: white;
+	text-align: center;
+}
+
+.write_table div {
+	display: inline-block;
+	width: 80%;
+}
+
+._title, ._upload, ._location {
+	display: inline-block;
+	width: 85%;
+	border: 1px solid #c3c3c3;
+}
+
+._location {
+	height: 30px;
+}
+
+._content {
+	width: 85%;
+	height: 300px;
+	overflow: auto;
+	border: 1px solid #c3c3c3;
+	display: inline-block;
+}
+
+._info_input {
+	display: inline-block;
+	width: 85%;
+	border: 1px solid #c3c3c3;
+}
+
+#map {
+	width: 100%;
+	height: 400px;
+	background-color: grey;
+}
+
+.title_box {
+	border: 1px solid #c3c3c3;
+	width:100%;
+	margin: 2% 0;
+}
+
+hr {
+	width:96%;
+}

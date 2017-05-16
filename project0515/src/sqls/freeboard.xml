@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FreeBoard">
+
+<insert id="writeFreeBoard"
+parameterType="project.jyland.board.model.JYBoard">
+INSERT INTO JYBOARD(SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, 
+LIKECOUNT, HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID) 
+VALUES(JY_BOARD_SEQ.NEXTVAL, #{id}, #{title}, #{content}, 
+#{location}, 0, 0, 0, SYSDATE, #{upload}, 1, 0, #{ip}, #{regionid})
+</insert>
+
+<select id="getFreeList"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID 
+FROM JYBOARD WHERE CATID=1 ORDER BY SEQ DESC
+</select>
+
+<select id="getFree"
+parameterType="project.jyland.board.model.JYBoard"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID 
+FROM JYBOARD WHERE SEQ=#{seq}
+</select>
+
+<select id="freePageList"
+parameterType="project.jyland.board.model.JYBoardParam"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, COMMENTCOUNT 
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM,
+SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, NVL(COMMENTCOUNT, 0)COMMENTCOUNT
+FROM JYBOARD 
+LEFT JOIN (SELECT BOARDSEQ, COUNT(JYCOMMENT.SEQ) AS COMMENTCOUNT 
+FROM JYCOMMENT GROUP BY BOARDSEQ) 
+ON SEQ=BOARDSEQ 
+WHERE CATID=1 AND DEL=0
+) A WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getFreeTotalCount"
+parameterType="project.jyland.board.model.JYBoardParam"
+resultType="java.lang.Integer">
+SELECT NVL(count(*), 0) AS cnt FROM JYBOARD WHERE CATID=1
+</select>
+
+</mapper>

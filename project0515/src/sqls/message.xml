@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+
+<insert id="writeMessage"
+parameterType="project.jyland.message.model.JYMessage">
+INSERT INTO JYMESSAGE(SEQ, SID, RID, CONTENT, WDATE, READCHK) 
+VALUES(JY_MESSAGE_SEQ.NEXTVAL, #{sid}, #{rid}, #{content}, SYSDATE, 0)
+</insert>
+
+<update id="updateReadchk"
+parameterType="project.jyland.message.model.JYMessage">
+UPDATE JYMESSAGE SET READCHK=1 WHERE SEQ=#{seq}
+</update>
+
+<select id="getMessage"
+parameterType="project.jyland.message.model.JYMessage"
+resultType="project.jyland.message.model.JYMessage">
+SELECT SEQ, SID, RID, CONTENT, WDATE, READCHK 
+FROM JYMESSAGE WHERE SEQ=#{seq}
+</select>
+
+<select id="getMessageList"
+parameterType="project.jyland.message.model.JYMessageParam"
+resultType="project.jyland.message.model.JYMessage">
+SELECT SEQ, SID, RID, CONTENT, WDATE, READCHK 
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM, 
+SEQ, SID, RID, CONTENT, 
+WDATE, READCHK 
+FROM JYMESSAGE WHERE RID=#{rid}
+) A WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getMessageTotalCount"
+parameterType="project.jyland.message.model.JYMessageParam"
+resultType="java.lang.Integer">
+SELECT NVL(count(*), 0) AS CNT FROM JYMESSAGE 
+WHERE RID=#{rid}
+</select>
+
+<delete id="deleteMessage"
+parameterType="project.jyland.message.model.JYMessage">
+DELETE FROM JYMESSAGE WHERE SEQ=#{seq}
+</delete>
+
+</mapper>

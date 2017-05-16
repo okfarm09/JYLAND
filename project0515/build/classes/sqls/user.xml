@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="JYUser">
+
+<insert id="addUser"
+parameterType="project.jyland.member.model.JYUser">
+INSERT INTO JYUSER(ID, UPWD, NICKNAME, EMAIL)
+VALUES(#{id}, #{upwd}, #{nickname}, #{email})
+</insert>
+
+<select id="loginUser"
+parameterType="project.jyland.member.model.JYUser"
+resultType="project.jyland.member.model.JYUser">
+SELECT ID, UPWD, NICKNAME, EMAIL, AUTH
+FROM JYUSER WHERE ID=#{id} AND UPWD=#{upwd}
+</select>
+
+<select id="userInfo"
+parameterType="java.lang.String"
+resultType="project.jyland.member.model.JYUser">
+SELECT ID, NICKNAME, EMAIL
+FROM JYUSER WHERE ID=#{id}
+</select>
+
+<select id="checkId"
+parameterType="project.jyland.member.model.JYUser"
+resultType="java.lang.Integer">
+SELECT NVL(COUNT(*),0)
+FROM JYUSER WHERE ID=#{id}
+</select>
+
+<update id="updateUser"
+parameterType="project.jyland.member.model.JYUser">
+UPDATE JYUSER SET NICKNAME=#{nickname}, EMAIL=#{email}, 
+UPWD=#{upwd} WHERE ID=#{id}
+</update>
+
+<select id="myList"
+parameterType="project.jyland.board.model.JYBoardParam"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, COMMENTCOUNT 
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM,
+SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, NVL(COMMENTCOUNT, 0)COMMENTCOUNT
+FROM JYBOARD 
+LEFT JOIN (SELECT BOARDSEQ, COUNT(JYCOMMENT.SEQ) AS COMMENTCOUNT 
+FROM JYCOMMENT GROUP BY BOARDSEQ) 
+ON SEQ=BOARDSEQ 
+WHERE ID=#{id} AND DEL=0
+) A WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getMyListTotalCount"
+parameterType="project.jyland.board.model.JYBoardParam"
+resultType="java.lang.Integer">
+SELECT NVL(count(*), 0) AS cnt FROM JYBOARD WHERE ID=#{id}
+</select>
+
+<select id="myCommentList"
+parameterType="project.jyland.comment.model.JYComment"
+resultType="project.jyland.comment.model.JYComment">
+SELECT SEQ, ID, CONTENT, BOARDSEQ, WDATE, LIKECOUNT, HATECOUNT, IP, SEQREPLY, DELFLAG
+FROM JYCOMMENT WHERE ID=#{id}
+ORDER BY SEQ DESC
+</select>
+
+</mapper>

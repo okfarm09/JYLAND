@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="mainpage.tiles" template="/WEB-INF/views/layout_tiles.jsp">
+		<put-attribute name="common" value="/WEB-INF/views/common/common.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="top_inc" value="/WEB-INF/views/common/top.jsp" />
+		<put-attribute name="top_member" value="/WEB-INF/views/common/top_member.jsp" />
+		<put-attribute name="top_menu" value="/WEB-INF/views/common/top_menu.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/common/main.jsp" />
+		<put-attribute name="bottom_inc" value="/WEB-INF/views/common/bottom_inc.jsp" />
+		<put-attribute name="chat_addon" value="/WEB-INF/views/common/chat_addon.jsp" />
+	</definition>
+	
+	<definition name="updateboard.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/update/updateboard.jsp" />
+	</definition>
+	
+	<definition name="freelist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/freelist.jsp" />
+	</definition>
+	
+	<definition name="freewrite.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/writes/freewrite.jsp" />
+	</definition>
+	
+	<definition name="freedetail.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/details/freedetail.jsp" />
+	</definition>
+	
+	<definition name="myinfo.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/info/myinfo.jsp" />
+	</definition>
+	
+	<definition name="infochange.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/info/infochange.jsp" />
+	</definition>
+	
+	<definition name="userinfo.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/info/userinfo.jsp" />
+	</definition>
+	
+	<definition name="searchlist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/searchlist.jsp" />
+	</definition>
+	
+	<definition name="mylist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/mylist.jsp" />
+	</definition>
+	
+	<definition name="mycomment.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/mycomment.jsp" />
+	</definition>
+	
+	<definition name="messagelist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/messagelist.jsp" />
+	</definition>
+
+	<definition name="test.tiles" template="/WEB-INF/views/test.jsp">
+	</definition>
+</tiles-definitions> 
