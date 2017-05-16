@@ -18,16 +18,16 @@
 		<put-attribute name="main" value="/WEB-INF/views/update/updateboard.jsp" />
 	</definition>
 	
-	<definition name="freelist.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/lists/freelist.jsp" />
+	<definition name="boardlist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/boardlist.jsp" />
 	</definition>
 	
-	<definition name="freewrite.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/writes/freewrite.jsp" />
+	<definition name="boardwrite.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/writes/boardwrite.jsp" />
 	</definition>
 	
-	<definition name="freedetail.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/details/freedetail.jsp" />
+	<definition name="boarddetail.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/details/boarddetail.jsp" />
 	</definition>
 	
 	<definition name="myinfo.tiles" extends="mainpage.tiles">

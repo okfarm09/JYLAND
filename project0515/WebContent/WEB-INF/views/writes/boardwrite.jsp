@@ -10,7 +10,7 @@
 	$(function() {
 		$("#_free_write_btn").click(function(e) {
 			$("#_hidden_content").attr("value", $("._content").html());
-			$("#_freewrite").attr("action","freewriteAf.jy").submit();
+			$("#_freewrite").attr("action","boardwriteAf.jy").submit();
 		});
 		initMap();
 		$.ajax({
@@ -78,6 +78,7 @@
 	<div class="write_table">
 		<form action=""   id="_freewrite" method="POST" enctype="multipart/form-data">
 		<input type="hidden" value="${login.id }" name="id">
+		<input type="hidden" value="${catid }" name="catid">
 			<span>제목</span> <input type="text" name="title" class="_title"> 
 			<span>사진</span> <input type="file" name="fileload" class="_upload"> 
 			<span>지도</span> <div class="_location">

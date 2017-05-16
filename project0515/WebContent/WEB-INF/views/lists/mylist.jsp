@@ -45,7 +45,7 @@
 					<tr class="_hover_tr">
 						<td>${fn:length(mylist)-vs.count+1}</td>
 						<td style="text-align: left">
-							<a href='freedetail.jy?seq=${list.seq}'> ${list.title}</a>
+							<a href='boarddetail.jy?seq=${list.seq}'> ${list.title}</a>
 							&nbsp;&nbsp;<span id="commentCount">[${list.commentcount}]</span></td>
 						<td><span class="hover_cursor" onclick="url_user_info('${list.id}')">${list.id}</span></td>
 						<td>${list.wdate}</td>

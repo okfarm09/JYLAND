@@ -51,4 +51,14 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getBoardTotalCount(param);
 	}
 
+	@Override
+	public String getCatName(int catid) {
+		return boardDao.getCatName(catid);
+	}
+
+	@Override
+	public void writeBoard(JYBoard board) {
+		boardDao.writeBoard(board);
+	}
+
 }

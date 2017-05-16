@@ -12,50 +12,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import project.jyland.comment.free.dao.FreeCommentService;
+import project.jyland.comment.dao.CommentService;
 import project.jyland.comment.model.JYComment;
  
 @Controller
-public class FreeCommentController {
+public class CommentController {
 	
-	Logger logger = LoggerFactory.getLogger(FreeCommentController.class);
+	Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
-	FreeCommentService freeCommentService;
+	CommentService CommentService;
 	
 	@RequestMapping(value = "writeComment.jy", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writeComment(JYComment comment,Model model) {
-		logger.info("Welcome FreeCommentController writeComment! " + new Date());
+		logger.info("Welcome CommentController writeComment! " + new Date());
 		String tempip = "000.000.000.000";
 		comment.setIp(tempip);
 		logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@2"+comment + new Date());
-		freeCommentService.writeComment(comment);
+		CommentService.writeComment(comment);
 		
-		return "redirect:/freedetail.jy?seq="+comment.getBoardseq();
+		return "redirect:/boarddetail.jy?seq="+comment.getBoardseq();
 	}
 	
 	@RequestMapping(value = "getCommentList.jy", method = {RequestMethod.GET, RequestMethod.POST})
 	public @ResponseBody List<JYComment> getCommentList(JYComment comment,Model model) {
-		logger.info("Welcome FreeCommentController getCommentList! " + new Date());
-		List<JYComment> CommentList= freeCommentService.getCommentList(comment);
-		logger.info("Welcome FreeCommentController getCommentList! " + CommentList);
+		logger.info("Welcome CommentController getCommentList! " + new Date());
+		List<JYComment> CommentList= CommentService.getCommentList(comment);
+		logger.info("Welcome CommentController getCommentList! " + CommentList);
 		return CommentList;
 	}
 	
 	@RequestMapping(value = "replyComment.jy", method = {RequestMethod.POST, RequestMethod.GET})
 	public String replyComment(JYComment comment, Model model) {
-		logger.info("Welcome FreeCommentController replyComment " + new Date());
+		logger.info("Welcome CommentController replyComment " + new Date());
 		String tempip = "000.000.000.000";
 		comment.setIp(tempip);
-		freeCommentService.replyComment(comment);
-		return "redirect:/freedetail.jy?seq="+comment.getBoardseq();
+		CommentService.replyComment(comment);
+		return "redirect:/boarddetail.jy?seq="+comment.getBoardseq();
 	}
 	
 	@RequestMapping(value = "deleteComment.jy", method = {RequestMethod.POST, RequestMethod.GET})
 	public String deleteComment(JYComment comment, Model mode) {
-		logger.info("Welcome FreeCommentController deleteComment " + new Date());
-		logger.info("Welcome FreeCommentController deleteComment " + comment);
-		freeCommentService.deleteComment(comment);
-		return "redirect:/freedetail.jy?seq="+comment.getBoardseq();
+		logger.info("Welcome CommentController deleteComment " + new Date());
+		logger.info("Welcome CommentController deleteComment " + comment);
+		CommentService.deleteComment(comment);
+		return "redirect:/boarddetail.jy?seq="+comment.getBoardseq();
 	}
 }

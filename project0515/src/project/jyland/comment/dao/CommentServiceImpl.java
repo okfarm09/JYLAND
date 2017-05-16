@@ -1,4 +1,4 @@
-package project.jyland.comment.free.dao;
+package project.jyland.comment.dao;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.jyland.comment.model.JYComment;
 @Service
-public class FreeCommentServiceImpl implements FreeCommentService {
+public class CommentServiceImpl implements CommentService {
 
 	@Autowired
-	FreeCommentDao freeCommentDao;
+	CommentDao freeCommentDao;
 	
 	@Override
 	@Transactional

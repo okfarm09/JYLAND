@@ -20,7 +20,7 @@
 	<c:if test="${(not empty login.id) }">
 	<div class="upper_list_btn">
 		<img src="<%=request.getContextPath()%>/img/write.gif"
-			class="write_btn hover_cursor" onclick="url_freewrite()" />
+			class="write_btn hover_cursor" onclick="url_boardwrite('${catid}')" />
 	</div>	
 	</c:if>
 	<div class="list_table">
@@ -42,27 +42,27 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${empty freelist}">
+				<c:if test="${empty boardlist}">
 					<tr>
 						<td colspan="5">작성된 글이 없습니다.</td>
 					</tr>
 				</c:if>
-				<c:forEach items="${freelist}" var="free" varStatus="vs">
+				<c:forEach items="${boardlist}" var="board" varStatus="vs">
 					<tr class="_hover_tr">
-						<td>${fn:length(freelist)-vs.count+1}</td>
+						<td>${fn:length(boardlist)-vs.count+1}</td>
 						<td style="text-align: left">
-							<a href='freedetail.jy?seq=${free.seq}'> ${free.title}</a>
-							&nbsp;&nbsp;<span id="commentCount">[${free.commentcount}]</span></td>
+							<a href='boarddetail.jy?seq=${board.seq}'> ${board.title}</a>
+							&nbsp;&nbsp;<span id="commentCount">[${board.commentcount}]</span></td>
 						<td>
-							<c:if test="${free.id ne login.id }">
-								<span class="hover_cursor" onclick="url_user_info('${free.id}')">${free.id}</span>
+							<c:if test="${board.id ne login.id }">
+								<span class="hover_cursor" onclick="url_user_info('${board.id}')">${board.id}</span>
 							</c:if>
-							<c:if test="${free.id eq login.id }">
-								<span class="hover_cursor" onclick="url_my_info();">${free.id}</span>
+							<c:if test="${board.id eq login.id }">
+								<span class="hover_cursor" onclick="url_my_info();">${board.id}</span>
 							</c:if>
 						</td>
-						<td>${free.wdate}</td>
-						<td>${free.readcount}</td>
+						<td>${board.wdate}</td>
+						<td>${board.readcount}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -80,7 +80,7 @@
 		<c:if test="${(not empty login.id) }">
 		<div class="lower_list_btn">
 			<img src="<%=request.getContextPath()%>/img/write.gif"
-				class="write_btn hover_cursor" onclick="url_freewrite()" />
+				class="write_btn hover_cursor" onclick="url_boardwrite('${catid}')" />
 		</div>
 		</c:if>
 	</div>

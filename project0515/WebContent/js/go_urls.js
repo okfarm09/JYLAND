@@ -5,5 +5,5 @@ function change_me () {self.location.href = "infochange.jy"; return false;} //�
 function url_user_info(id) {self.location.href = "userinfo.jy?id="+id; return false;} //유저 정보 보기
 function url_mylist(id) {self.location.href = "mylist.jy?id="+id; return false;} //내 글 보기
 function url_mycomment(id) {self.location.href = "mycomment.jy?id="+id; return false;} //내 댓글 보기
-function url_board1() {self.location.href = "freeboard.jy";  return false;} //자유게시판
-function url_freewrite() {self.location.href = "freewrite.jy"; return false;} //자유게시판 글쓰기
+function url_board(catid) {self.location.href = "board.jy?catid="+catid;  return false;} //자유게시판
+function url_boardwrite(catid) {self.location.href = "boardwrite.jy?catid="+catid; return false;} //자유게시판 글쓰기

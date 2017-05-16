@@ -37,7 +37,7 @@
 					<tr class="_hover_tr">
 						<td>${fn:length(searchlist)-vs.count+1}</td>
 						<td style="text-align: left">
-							<a href='freedetail.jy?seq=${search.seq}'> ${search.title}</a></td>
+							<a href='boarddetail.jy?seq=${search.seq}'> ${search.title}</a></td>
 						<td><span class="hover_cursor" onclick="url_user_info('${search.id}')">${search.id}</span></td>
 						<td>${search.wdate}</td>
 						<td>${search.readcount}</td>

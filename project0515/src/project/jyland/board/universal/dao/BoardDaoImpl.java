@@ -46,4 +46,14 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.selectOne(ns+"getBoardTotalCount", param);
 	}
 
+	@Override
+	public String getCatName(int catid) {
+		return sqlSession.selectOne(ns+"getCatName", catid);
+	}
+
+	@Override
+	public void writeBoard(JYBoard board) {
+		sqlSession.insert(ns+"writeBoard", board);
+	}
+
 }

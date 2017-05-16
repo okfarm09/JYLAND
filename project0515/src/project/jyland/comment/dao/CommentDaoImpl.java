@@ -1,4 +1,4 @@
-package project.jyland.comment.free.dao;
+package project.jyland.comment.dao;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import project.jyland.comment.model.JYComment;
 @Repository
-public class FreeCommentDaoImpl implements FreeCommentDao {
+public class CommentDaoImpl implements CommentDao {
 
 	String ns = "Comment.";
 	

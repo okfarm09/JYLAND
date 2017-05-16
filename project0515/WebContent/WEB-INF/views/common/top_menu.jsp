@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="menu">
 	<ul class="menu_list">
-		<li><span class="top_lists" onclick="url_board1();">자유게시판</span></li>
+		<li><span class="top_lists" onclick="url_board(1);">자유게시판</span></li>
 		<li><span class="top_lists">게시판2</span></li>
 		<li><span class="top_lists">게시판3</span></li>
 		<li><span class="top_lists">게시판4</span></li>

@@ -5,10 +5,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="Board">
 
+<insert id="writeBoard"
+parameterType="project.jyland.board.model.JYBoard">
+INSERT INTO JYBOARD(SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, 
+LIKECOUNT, HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID) 
+VALUES(JY_BOARD_SEQ.NEXTVAL, #{id}, #{title}, #{content}, 
+#{location}, 0, 0, 0, SYSDATE, #{upload}, #{catid}, 0, #{ip}, #{regionid})
+</insert>
+
 <select id="getCatPrep"
 parameterType="java.lang.Integer"
 resultType="java.lang.String">
 SELECT CATPREP FROM JYCAT
+WHERE CATID=#{catid}
+</select>
+
+<select id="getCatName"
+parameterType="java.lang.Integer"
+resultType="java.lang.String">
+SELECT CATNAME FROM JYCAT
 WHERE CATID=#{catid}
 </select>
 

@@ -28,31 +28,31 @@
 </style>
 <div class="boarddetail_wrap">
 <form method="POST" id="_detail_form">
-<input type="hidden" value="${freedetail.seq}" name="seq" />
+<input type="hidden" value="${boarddetail.seq}" name="seq" />
 <input type="hidden" value="${login.id}" name="id" id="_login_id" />
-<input type="hidden" value="${freedetail.content}" name="content" />
-<input type="hidden" value="${freedetail.title}" name="title" />
-<input type="hidden" value="${freedetail.location}" name="location" />
-<input type="hidden" value="${freedetail.upload}" name="upload" />
-<input type="hidden" value="${freedetail.regionid}" name="regionid" />
-<input type="hidden" value="${freedetail.catid}" name="catid" />
+<input type="hidden" value="${boarddetail.content}" name="content" />
+<input type="hidden" value="${boarddetail.title}" name="title" />
+<input type="hidden" value="${boarddetail.location}" name="location" />
+<input type="hidden" value="${boarddetail.upload}" name="upload" />
+<input type="hidden" value="${boarddetail.regionid}" name="regionid" />
+<input type="hidden" value="${boarddetail.catid}" name="catid" />
 </form>
 <input type="hidden" value="${login.id }" id="_comment_id" />
 	<div class="details">
 		<div class="title_box">
-			<div class="box_title">${freedetail.title}</div>
-			<div class="box_date">${freedetail.id} | ${freedetail.wdate}</div>
+			<div class="box_title">${boarddetail.title}</div>
+			<div class="box_date">${boarddetail.id} | ${boarddetail.wdate}</div>
 		</div>
 		<div class="">
-			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${freedetail.readcount}</span>
-			<img src="<%=request.getContextPath()%>/img/like.gif"><span>${freedetail.likecount}</span>
-			<img src="<%=request.getContextPath()%>/img/hate.gif"><span>${freedetail.hatecount}</span>
+			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${boarddetail.readcount}</span>
+			<img src="<%=request.getContextPath()%>/img/like.gif"><span>${boarddetail.likecount}</span>
+			<img src="<%=request.getContextPath()%>/img/hate.gif"><span>${boarddetail.hatecount}</span>
 		</div>
 		<div class="detail_content">
 			<div>
-			<c:if test="${freedetail.location ne 'none' }">
-			<input type="hidden" value="${freedetail.lat}" id="detail_lat" />
-			<input type="hidden" value="${freedetail.lng}" id="detail_lng" />
+			<c:if test="${boarddetail.location ne 'none' }">
+			<input type="hidden" value="${boarddetail.lat}" id="detail_lat" />
+			<input type="hidden" value="${boarddetail.lng}" id="detail_lng" />
 			<div id="map2">
 			<script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsfCP6fzs0kw5N8hmmptZAgV5uChrSyA8&callback=initMap">
@@ -62,15 +62,15 @@
 			</c:if>
 			</div>
 			<div>
-			<c:if test="${not fn:containsIgnoreCase(freedetail.upload, 'back') }">
-			<img  src="<%=request.getContextPath()%>/upload/${freedetail.upload}" id="_detail_img" >
+			<c:if test="${not fn:containsIgnoreCase(boarddetail.upload, 'back') }">
+			<img  src="<%=request.getContextPath()%>/upload/${boarddetail.upload}" id="_detail_img" >
 			</c:if>
 			</div>
-			<div>${freedetail.content}</div>
+			<div>${boarddetail.content}</div>
 		</div>
 		<div class="buttons">
 		<span onclick="url_board1();" class=" hover_cursor">목록</span>
-		<c:if test="${login.id eq freedetail.id }">
+		<c:if test="${login.id eq boarddetail.id }">
 			<span onclick="detail_update();" class=" hover_cursor">수정</span>
 			<span onclick="detail_delete();" class=" hover_cursor">삭제</span>
 		</c:if>
@@ -131,7 +131,7 @@ function cancel(seq) {
 function getcomment(){
     $.ajax({
          url:"getCommentList.jy",
-         data: {boardseq: "${freedetail.seq}"},
+         data: {boardseq: "${boarddetail.seq}"},
          success : function(data) {
             var a = "<table border='1' class='list_table' >" +
             	"<colgroup>" +
@@ -182,7 +182,7 @@ function getcomment(){
 	 $.ajax({
 		 url: "deleteComment.jy",
 		 data: {
-			 boardseq : "${freedetail.seq}",
+			 boardseq : "${boarddetail.seq}",
 			 seqReply : seq
 		 },
 		 success: function(data) {
@@ -195,7 +195,7 @@ function getcomment(){
 		url:"replyComment.jy",
 		data:{
 			id : $("#_comment_id").val(),
-	        boardseq : "${freedetail.seq}",
+	        boardseq : "${boarddetail.seq}",
 	        content : $("#_reply_txt"+seq).val(),
 	        seqReply : seq
 		},
@@ -218,7 +218,7 @@ $(".write_btn").click(function() {
       dataType:'text',
       data : {
          id : $("#_comment_id").val(),
-         boardseq : "${freedetail.seq}",
+         boardseq : "${boarddetail.seq}",
          content : $(".reply_txt").val()
    },
       success : function(data) {
