@@ -1,12 +1,12 @@
-package project.jyland.board.universal.dao;
+package project.jyland.board.dao;
 
 import java.util.List;
 
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardParam;
 
-public interface BoardService {
-
+public interface BoardDao {
+	
 	void writeBoard(JYBoard board);
 	void updateBoard(JYBoard board);
 	void deleteBoard(JYBoard board);

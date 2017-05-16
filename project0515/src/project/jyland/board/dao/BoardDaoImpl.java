@@ -1,4 +1,4 @@
-package project.jyland.board.universal.dao;
+package project.jyland.board.dao;
 
 import java.util.List;
 

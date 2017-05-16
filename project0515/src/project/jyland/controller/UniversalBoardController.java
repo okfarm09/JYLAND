@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import project.jyland.board.dao.BoardService;
 import project.jyland.board.help.FUpUtil;
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
-import project.jyland.board.universal.dao.BoardService;
 
 @Controller
 public class UniversalBoardController {
