@@ -125,6 +125,7 @@ public class BoardController {
 	public String freedetail(JYBoard board, Model model) {
 		logger.info("Welcome BoardController boarddetail! ---------------------------------------");
 		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
+		boardService.updateReadcount(board);
 		model.addAttribute("boarddetail", bm);
 		logger.info("Welcome BoardController boarddetail! " + bm);
 		return "boarddetail.tiles";

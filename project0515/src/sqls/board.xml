@@ -63,6 +63,11 @@ parameterType="project.jyland.board.model.JYBoard">
 UPDATE JYBOARD SET DEL=1 WHERE SEQ=#{seq}
 </update>
 
+<update id="updateReadcount"
+parameterType="project.jyland.board.model.JYBoard">
+UPDATE JYBOARD SET READCOUNT=READCOUNT+1 WHERE SEQ=#{seq}
+</update>
+
 <select id="getRecentList"
 parameterType="project.jyland.board.model.JYBoard"
 resultType="project.jyland.board.model.JYBoard">

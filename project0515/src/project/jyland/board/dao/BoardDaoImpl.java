@@ -55,4 +55,9 @@ public class BoardDaoImpl implements BoardDao {
 	public List<JYBoard> getRecentList() {
 		return sqlSession.selectList(ns+"getRecentList");
 	}
+
+	@Override
+	public void updateReadcount(JYBoard board) {
+		sqlSession.update(ns+"updateReadcount", board);
+	}
 }

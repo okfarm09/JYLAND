@@ -15,4 +15,5 @@ public interface BoardDao {
 	List<JYBoard> getBoardPageList(JYBoardParam param);
 	int getBoardTotalCount(JYBoardParam param);
 	List<JYBoard> getRecentList();
+	void updateReadcount(JYBoard board);
 }

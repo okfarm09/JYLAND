@@ -61,5 +61,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getRecentList();
 	}
 
+	@Override
+	public void updateReadcount(JYBoard board) {
+		boardDao.updateReadcount(board);
+	}
+
 
 }
