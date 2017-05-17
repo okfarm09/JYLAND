@@ -22,7 +22,7 @@
 					<td>${recent.dateForMain}</td>
 					<td style="text-align: left">
 						<b>${recent.catname}</b>
-						<a href='freedetail.jy?seq=${recent.seq}'>${recent.title}</a>
+						<a href='boarddetail.jy?seq=${recent.seq}'>${recent.title}</a>
 						&nbsp;&nbsp;<span id="commentCount">[${recent.commentcount}]</span>
 					</td>
 				</tr>
