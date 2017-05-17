@@ -59,6 +59,7 @@ SELECT NVL(count(*), 0) AS cnt FROM JYUSER
 UPDATE JYUSER SET UPWD='123', NICKNAME='탈퇴 회원', EMAIL ='#'
 WHERE ID='22'
 
-ALTER TABLE JYUSER DROP CONSTRAINTS UNIQUE
+SELECT constraint_name, search_condition FROM user_constraints where table_name = 'jyuser';
+ALTER TABLE JYUSER DROP CONSTRAINT PROJECT.SYS_C007386 
 
 

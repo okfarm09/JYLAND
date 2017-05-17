@@ -59,7 +59,12 @@
 						<td>${comment.wdate}</td>
 						<td>${comment.likecount}</td>
 						<td>${comment.hatecount}</td>
-						<td><i class='fa fa-times hover_cursor' onclick="delete_comment('${comment.seq}', '${comment.boardseq}')"></i></td>
+						<c:if test="${comment.id eq login.id || login.auth eq 1 || login.auth eq 2}" >
+							<td><i class='fa fa-times hover_cursor' onclick="delete_comment('${comment.seq}', '${comment.boardseq}', '${comment.id}')"></i></td>
+						</c:if>
+						<c:if test="${comment.id ne login.id}">
+							<td> </td>
+						</c:if>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -78,16 +83,17 @@
 	<!-- 	</div> -->
 </div>
 <script>
- function delete_comment(seq, boardseq) {
+ function delete_comment(seq, boardseq, id) {
 	 alert("안 돼 못 지워줘 돌아가 "+seq+" "+boardseq);
 	 $.ajax({
 		 url: "deleteComment.jy",
 		 data: {
 			 boardseq : boardseq,
-			 seq : seq
+			 seq : seq,
+			 id : id
 		 },
 		 success: function(data) {
-			 url_mycomment('${login.id}');
+			 url_mycomment(id);
 		 }
 	 });
  }

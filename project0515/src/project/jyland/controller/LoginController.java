@@ -136,7 +136,7 @@ public class LoginController {
 		List<JYBoard> mylist = jYUserService.myList(param);
 		logger.info("Welcome LoginController mylist! " + mylist.size());
 
-		model.addAttribute("doc_title", "내 글 보기");
+		model.addAttribute("doc_title", param.getId() + "의 전체글 보기");
 		model.addAttribute("mylist", mylist);
 
 		model.addAttribute("pageNumber", sn);
@@ -153,7 +153,7 @@ public class LoginController {
 		List<JYComment> mycomment= jYUserService.myCommentList(comment);
 		logger.info("Welcome LoginController mycomment! " + mycomment);
 		
-		model.addAttribute("doc_title", "내 댓글 보기");
+		model.addAttribute("doc_title",  comment.getId() + "의 전체 댓글 보기");
 		model.addAttribute("mycomment", mycomment);
 		return "mycomment.tiles";
 	}
@@ -188,7 +188,7 @@ public class LoginController {
 	
 	@RequestMapping(value="deleteuser.jy", method = {RequestMethod.GET, RequestMethod.POST})
 	public String deleteUser(JYUser user, Model model) {
-		logger.info("Welcome LoginController deleteUser!===============================================================" + new Date());
+		logger.info("Welcome LoginController deleteUser!" + new Date());
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
 		String pwd = RandomStringUtils.random( 15, characters );
 		user.setUpwd(pwd);

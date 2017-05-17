@@ -51,10 +51,10 @@ function cancel_msg() {
 		<p>&nbsp;</p>
 		<span onclick='$("#_send_msg").css("display", "block")'
 			class="hover_cursor">쪽지 보내기</span> <span onclick="#"
-			class="hover_cursor">신고하기</span> <span onclick="#"
-			class="hover_cursor">차단하기</span> <span onclick="#"
-			class="hover_cursor">전체 게시글</span> <span onclick="#"
-			class="hover_cursor">전체 댓글</span>
+			class="hover_cursor">신고하기</span>
+			<span onclick="#" class="hover_cursor">차단하기</span> 
+			<span onclick="url_mylist('${userInfo.id}')" class="hover_cursor">전체 게시글</span>
+			<span onclick="url_mycomment('${userInfo.id}')" class="hover_cursor">전체 댓글</span>
 	</div>
 </div>
 <div class="modal" id="_send_msg">
