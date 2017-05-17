@@ -2,7 +2,6 @@ package project.jyland.controller;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -194,5 +193,12 @@ public class LoginController {
 		user.setUpwd(pwd);
 		jYUserService.deleteUser(user);
 		return "redirect:/userlist.jy";
+	}
+	
+	@RequestMapping(value = "getalluserlist.jy", method = RequestMethod.GET)
+	public @ResponseBody List<JYUser> getAllUserList(Model model) {
+		logger.info("Welcome LoginController getAllUserList " + new Date());
+		List<JYUser> list=jYUserService.getAllUserList();
+		return list;
 	}
 }

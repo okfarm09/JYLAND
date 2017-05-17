@@ -58,25 +58,59 @@
 		if (content == "") {
 			console.log(content + "aaaaaa");
 		} else {
-			if (content.includes("/")) {
-				if (content.includes(("/" + $("#chat_id").val()))) {
-					var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
-					if (temp[1].trim() == "") {
-					} else {
-						$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
-							+ sender + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
+			var id_true=false;
+			$.ajax({
+				url:"getalluserlist.jy",
+				success: function(data) {
+					$.each(data, function(index, val) {
+						if(sender==val.id) {
+							id_true=true;
+							return;
+						}
+					});
+					if(id_true==false) {
+						if (content.includes("/")) {
+							if (content.includes(("/" + $("#chat_id").val()))) {
+								var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
+								if (temp[1].trim() == "") {
+								} else {
+									$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
+										+ sender + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
+								}
+							} else {
+							}
+						} else {
+							if (content.includes("!")) {
+								$("#messageWindow").html($("#messageWindow").html()
+									+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
+							} else {
+								$("#messageWindow").html($("#messageWindow").html()
+									+ "<p class='chat_content' style='color:#"+sender+"'>" + sender + " : " + content + "</p>");
+							}
+						}
+					}else {
+						if (content.includes("/")) {
+							if (content.includes(("/" + $("#chat_id").val()))) {
+								var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
+								if (temp[1].trim() == "") {
+								} else {
+									$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
+										+ sender+"(회원)" + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
+								}
+							} else {
+							}
+						} else {
+							if (content.includes("!")) {
+								$("#messageWindow").html($("#messageWindow").html()
+									+ "<p class='chat_content'><b class='impress'>" + sender+"(회원)" + " : " + content + "</b></p>");
+							} else {
+								$("#messageWindow").html($("#messageWindow").html()
+									+ "<p class='chat_content' >" + sender+"(회원)" + " : " + content + "</p>");
+							}
+						}
 					}
-				} else {
 				}
-			} else {
-				if (content.includes("!")) {
-					$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
-				} else {
-					$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'>" + sender + " : " + content + "</p>");
-				}
-			}
+			});
 		}
 		var elem = document.getElementById('messageWindow');
 		elem.scrollTop = elem.scrollHeight;
@@ -95,11 +129,11 @@
 				msg11=(inputMessage.value).replace(/:\)/g, 
 				"<i class='fa fa-smile-o' style='font-size:50px'></i>&nbsp;");
 				$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'>나 : " + msg11 + "</p>");
+						+ "<p class='chat_content' style='font-weight: bold'>나 : " + msg11 + "</p>");
 			}else {
 				msg11=inputMessage.value;
 				$("#messageWindow").html($("#messageWindow").html()
-					+ "<p class='chat_content'>나 : " + msg11 + "</p>");	
+					+ "<p class='chat_content' style='font-weight: bold'>나 : " + msg11 + "</p>");	
 			}
 		}
 		webSocket.send($("#chat_id").val() + "|" + inputMessage.value);	
