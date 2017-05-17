@@ -60,7 +60,7 @@ public class LoginController {
 	public String logout(HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController logout! " + new Date());
 		request.getSession().invalidate();
-		return "mainpage.tiles";
+		return "redirect:/main.jy";
 	}//
 
 	@RequestMapping(value = "myinfo.jy", method = RequestMethod.GET)

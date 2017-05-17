@@ -48,28 +48,72 @@
 <div class="modal" id="_msg_detail">
 	<span onclick='clear_msg()' class="close"
 		title="Close Join">&times;</span>
-	<form class="modal-content animate" method="POST" id="_msg_form">
+	<div class="modal-content animate">
 		<div class="container"> <label><b>보낸이</b></label>
 			<span class="id" id="_detail_sender"></span><label><b>보낸 날짜</b></label>
 			<span class="id" id="_detail_wdate"></span><label><b>내용</b></label>
-			<div id="_ocon"></div>
+			<div id="_cont" class="_content_div"></div>
 			<div class="clearfix">
 				<button type="button" class="cancelbtn"
 					onclick='clear_msg()'>닫기</button>
-				<button type="button" class="signupbtn" id="_msg_btn">답장</button>
+				<button type="button" class="signupbtn" id="_rpl_btn" onclick='reply_msg()'>답장</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="_send_msg">
+	<span onclick='cancel_msg()' class="close"
+		title="Close Join">&times;</span>
+	<form class="modal-content animate" method="POST" id="_msg_form">
+		<div class="container">
+			<input type="hidden" value="${login.id }" name="sid" id="_sid"> <label><b>받는이</b></label>
+			<input type="text" placeholder="Enter ID" name="rid" class="id"
+				value='' readonly="readonly" id="_rid"> <label><b>내용</b></label>
+			<div onClick="this.contentEditable='true';" id="_ocon" class="_content_div"></div>
+			<div class="clearfix">
+				<button type="button" class="cancelbtn"
+					onclick='cancel_msg()'>취소</button>
+				<button type="button" class="signupbtn" id="_msg_btn">보내기</button>
 			</div>
 		</div>
 	</form>
 </div>
+
 <script>
 $(function() {
 	msg_list();
+	$("#_msg_btn").click(function(e) {
+		$.ajax({
+			url: "writemessage.jy",
+			method: "POST",
+			data : {
+				rid: $("#_rid").val(),
+				sid: $("#_sid").val(),
+				content: $("#_ocon").html()
+			},
+			success: function(data) {
+				$("#_send_msg").css("display", "none");
+				$("#_ocon").html("");
+			}
+		});
+	});
 });
+function reply_msg() {
+	var rid=$("#_detail_sender").html();
+	clear_msg();
+	$("#_rid").attr("value",rid);
+	$("#_send_msg").css("display", "block");
+}
+function cancel_msg() {
+	$("#_ocon").html("");
+	$("#_send_msg").css("display", "none");
+}
 function clear_msg() {
 	$("#_detail_sender").html("");
 	$("#_detail_wdate").html("");
-	$("#_ocon").html("");
-	$("#_msg_detail").css("display", "none")
+	$("#_cont").html("");
+	$("#_msg_detail").css("display", "none");
 }
 var msglist="<c:if test='${empty msglist }'>" + 
 	"<tr><td colspan='5'>받은 쪽지가 없습니다.</td></tr>"
@@ -110,7 +154,7 @@ function show_msg(seq) {
 		success: function(data) {
 			$("#_detail_sender").html(data.sid);
 			$("#_detail_wdate").html(data.wdate);
-			$("#_ocon").html(data.content);
+			$("#_cont").html(data.content);
 			$("#_msg_detail").css("display", "block");
 			msg_list();
 		}
@@ -120,7 +164,7 @@ function show_msg(seq) {
 </script>
 <style>
 <!--
-#_ocon {
+._content_div {
 	width: 100%;
 	height: 400px;
 	padding: 12px 20px;
