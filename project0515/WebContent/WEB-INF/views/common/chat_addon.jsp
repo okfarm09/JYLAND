@@ -58,8 +58,8 @@
 		if (content == "") {
 			console.log(content + "aaaaaa");
 		} else {
-			if (content.match("/")) {
-				if (content.match(("/" + $("#chat_id").val()))) {
+			if (content.includes("/")) {
+				if (content.includes(("/" + $("#chat_id").val()))) {
 					var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
 					if (temp[1].trim() == "") {
 					} else {
@@ -69,7 +69,7 @@
 				} else {
 				}
 			} else {
-				if (content.match("!")) {
+				if (content.includes("!")) {
 					$("#messageWindow").html($("#messageWindow").html()
 						+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
 				} else {
@@ -78,6 +78,8 @@
 				}
 			}
 		}
+		var elem = document.getElementById('messageWindow');
+		elem.scrollTop = elem.scrollHeight;
 	}
 	function onOpen(event) {
 		$("#messageWindow").html("<p class='chat_content'>채팅에 참여하였습니다.</p>");
@@ -86,26 +88,23 @@
 		alert(event.data);
 	}
 	function send() {
+		var msg11="";
 		if (inputMessage.value == "") {
 		} else {
-			if((inputMessage.value).includes("<")) {
-				var msg11=(inputMessage.value).replace(/</g, "&lt;");
+			if((inputMessage.value).includes(":)")) {
+				msg11=(inputMessage.value).replace(/:\)/g, 
+				"<i class='fa fa-smile-o' style='font-size:50px'></i>&nbsp;");
 				$("#messageWindow").html($("#messageWindow").html()
 						+ "<p class='chat_content'>나 : " + msg11 + "</p>");
 			}else {
-				if((inputMessage.value).includes(":)")) {
-					var smile=":)";
-					var msg11=(inputMessage.value).replace(/:\)/g, "<i class='fa fa-smile-o fa-spin'></i>");
-					console.log(msg11);
-					$("#messageWindow").html($("#messageWindow").html()
-							+ "<p class='chat_content'>나 : " + msg11 + "</p>");
-				}else {
-					$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'>나 : " + inputMessage.value + "</p>");		
-				}		
+				msg11=inputMessage.value;
+				$("#messageWindow").html($("#messageWindow").html()
+					+ "<p class='chat_content'>나 : " + msg11 + "</p>");	
 			}
 		}
-		webSocket.send($("#chat_id").val() + "|" + inputMessage.value);
+		webSocket.send($("#chat_id").val() + "|" + inputMessage.value);	
+		var elem = document.getElementById('messageWindow');
+		elem.scrollTop = elem.scrollHeight;
 		inputMessage.value = "";
 	}
 	$("#inputMessage").keyup(function(e){ 
@@ -116,8 +115,4 @@
 	    } 
 	});
 	// 	채팅이 많아져 스크롤바가 넘어가더라도 자동적으로 스크롤바가 내려가게함
-	window.setInterval(function() {
-		var elem = document.getElementById('messageWindow');
-		elem.scrollTop = elem.scrollHeight;
-	}, 0);
 </script>
