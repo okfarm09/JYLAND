@@ -96,7 +96,7 @@
 							+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
 					} else {
 						$("#messageWindow").html($("#messageWindow").html()
-							+ "<p class='chat_content' style='color:#"+sender+"'>" + sender + " : " + content + "</p>");
+							+ "<p class='chat_content' >" + sender + " : " + content + "</p>");
 					}
 				}
 			}
@@ -118,11 +118,11 @@
 				msg11=(inputMessage.value).replace(/:\)/g, 
 				"<i class='fa fa-smile-o' style='font-size:50px'></i>&nbsp;");
 				$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'>나 : " + msg11 + "</p>");
+						+ "<p class='chat_content' style='font-weight: bold'>나 : " + msg11 + "</p>");
 			}else {
 				msg11=inputMessage.value;
 				$("#messageWindow").html($("#messageWindow").html()
-					+ "<p class='chat_content'>나 : " + msg11 + "</p>");	
+					+ "<p class='chat_content' style='font-weight: bold'>나 : " + msg11 + "</p>");	
 			}
 		}
 		webSocket.send($("#chat_id").val() + "|" + inputMessage.value);	
