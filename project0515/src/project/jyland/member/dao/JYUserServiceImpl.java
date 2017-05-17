@@ -10,6 +10,7 @@ import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardParam;
 import project.jyland.comment.model.JYComment;
 import project.jyland.member.model.JYUser;
+import project.jyland.member.model.JYUserParam;
 
 @Service
 public class JYUserServiceImpl implements JYUserService {
@@ -62,6 +63,21 @@ public class JYUserServiceImpl implements JYUserService {
 	@Override
 	public List<JYComment> myCommentList(JYComment comment) {
 		return jYUserDao.myCommentList(comment);
+	}
+
+	@Override
+	public List<JYUser> getUserList(JYUserParam param) {
+		return jYUserDao.getUserList(param);
+	}
+
+	@Override
+	public int getUserTotalCount(JYUserParam param) {
+		return jYUserDao.getUserTotalCount(param);
+	}
+
+	@Override
+	public void deleteUser(JYUser user) {
+		jYUserDao.deleteUser(user);
 	}
 
 }

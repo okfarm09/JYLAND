@@ -69,4 +69,27 @@ FROM JYCOMMENT WHERE ID=#{id}
 ORDER BY SEQ DESC
 </select>
 
+<select id="getUserList"
+parameterType="project.jyland.member.model.JYUserParam"
+resultType="project.jyland.member.model.JYUser">
+SELECT ID, UPWD, NICKNAME, EMAIL, AUTH
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY ID ASC) AS RNUM,
+ID, UPWD, NICKNAME, EMAIL, AUTH 
+FROM JYUSER 
+) WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getUserTotalCount"
+parameterType="project.jyland.member.model.JYUserParam"
+resultType="java.lang.Integer">
+SELECT NVL(count(*), 0) AS cnt FROM JYUSER
+</select>
+
+<update id="deleteUser"
+parameterType="project.jyland.member.model.JYUser">
+UPDATE JYUSER SET UPWD=#{upwd}, NICKNAME='탈퇴 회원', EMAIL ='#'
+WHERE ID=#{id}
+</update>
+
 </mapper>

@@ -57,6 +57,10 @@
 	<definition name="messagelist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/messagelist.jsp" />
 	</definition>
+	
+	<definition name="userlist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/userlist.jsp" />
+	</definition>
 
 	<definition name="test.tiles" template="/WEB-INF/views/test.jsp">
 	</definition>

@@ -2,9 +2,11 @@ package project.jyland.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import project.jyland.board.model.JYBoardParam;
 import project.jyland.comment.model.JYComment;
 import project.jyland.member.dao.JYUserService;
 import project.jyland.member.model.JYUser;
+import project.jyland.member.model.JYUserParam;
 
 @Controller
 public class LoginController {
@@ -155,4 +158,41 @@ public class LoginController {
 		return "mycomment.tiles";
 	}
 
+	@RequestMapping(value = "userlist.jy", method = {RequestMethod.GET})
+	public String userlist(JYUserParam param, Model model) {
+		logger.info("Welcome LoginController userlist!" + new Date());
+		int sn = param.getPageNumber();
+		int start = (sn) * param.getRecordCountPerPage() + 1;
+		int end = (sn + 1) * param.getRecordCountPerPage();
+
+		param.setStart(start);
+		param.setEnd(end);
+		logger.info("Welcome LoginController userlist param! " + param);
+
+		int totalRecordCount = jYUserService.getUserTotalCount(param);
+		logger.info("Welcome LoginController userlist totalRecordCount! " + totalRecordCount);
+
+		List<JYUser> userlist = jYUserService.getUserList(param);
+		logger.info("Welcome LoginController userlist! " + userlist.size());
+
+		model.addAttribute("doc_title", "회원리스트");
+		model.addAttribute("userlist", userlist);
+
+		model.addAttribute("pageNumber", sn);
+		model.addAttribute("pageCountPerScreen", 10);
+		model.addAttribute("recordCountPerPage", param.getRecordCountPerPage());
+		model.addAttribute("totalRecordCount", totalRecordCount);
+
+		return "userlist.tiles";
+	}
+	
+	@RequestMapping(value="deleteuser.jy", method = {RequestMethod.GET, RequestMethod.POST})
+	public String deleteUser(JYUser user, Model model) {
+		logger.info("Welcome LoginController deleteUser!===============================================================" + new Date());
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+		String pwd = RandomStringUtils.random( 15, characters );
+		user.setUpwd(pwd);
+		jYUserService.deleteUser(user);
+		return "redirect:/userlist.jy";
+	}
 }

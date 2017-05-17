@@ -32,6 +32,9 @@
 <span onclick="change_me()" class="hover_cursor">정보변경</span>
 <span onclick="url_mylist('${login.id}')" class="hover_cursor">내글보기</span>
 <span onclick="url_mycomment('${login.id}')" class="hover_cursor">내댓글보기</span>
+<c:if test="${login.auth eq 1 }">
+	<span onclick="url_userlist()" class="hover_cursor">회원관리</span>
+</c:if>
 </div>
 </div>
 
