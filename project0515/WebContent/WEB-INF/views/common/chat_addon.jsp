@@ -88,8 +88,22 @@
 	function send() {
 		if (inputMessage.value == "") {
 		} else {
-			$("#messageWindow").html($("#messageWindow").html()
-				+ "<p class='chat_content'>나 : " + inputMessage.value + "</p>");
+			if((inputMessage.value).includes("<")) {
+				var msg11=(inputMessage.value).replace(/</g, "&lt;");
+				$("#messageWindow").html($("#messageWindow").html()
+						+ "<p class='chat_content'>나 : " + msg11 + "</p>");
+			}else {
+				if((inputMessage.value).includes(":)")) {
+					var smile=":)";
+					var msg11=(inputMessage.value).replace(/:\)/g, "<i class='fa fa-smile-o fa-spin'></i>");
+					console.log(msg11);
+					$("#messageWindow").html($("#messageWindow").html()
+							+ "<p class='chat_content'>나 : " + msg11 + "</p>");
+				}else {
+					$("#messageWindow").html($("#messageWindow").html()
+						+ "<p class='chat_content'>나 : " + inputMessage.value + "</p>");		
+				}		
+			}
 		}
 		webSocket.send($("#chat_id").val() + "|" + inputMessage.value);
 		inputMessage.value = "";
