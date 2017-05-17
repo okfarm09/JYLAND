@@ -23,4 +23,6 @@ public interface JYUserDao {
 	List<JYUser> getUserList(JYUserParam param);
 	int getUserTotalCount(JYUserParam param);
 	void deleteUser(JYUser user);
+	
+	List<JYUser> getAllUserList();
 }

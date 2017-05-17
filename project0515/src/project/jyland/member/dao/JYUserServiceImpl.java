@@ -61,23 +61,33 @@ public class JYUserServiceImpl implements JYUserService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<JYComment> myCommentList(JYComment comment) {
 		return jYUserDao.myCommentList(comment);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<JYUser> getUserList(JYUserParam param) {
 		return jYUserDao.getUserList(param);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public int getUserTotalCount(JYUserParam param) {
 		return jYUserDao.getUserTotalCount(param);
 	}
 
 	@Override
+	@Transactional
 	public void deleteUser(JYUser user) {
 		jYUserDao.deleteUser(user);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYUser> getAllUserList() {
+		return jYUserDao.getAllUserList();
 	}
 
 }

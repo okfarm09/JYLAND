@@ -74,4 +74,9 @@ public class JYUserDaoImpl implements JYUserDao {
 		sqlSession.update(ns+"deleteUser", user);
 	}
 
+	@Override
+	public List<JYUser> getAllUserList() {
+		return sqlSession.selectList(ns+"getAllUserList");
+	}
+
 }

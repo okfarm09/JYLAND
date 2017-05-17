@@ -80,6 +80,12 @@ FROM JYUSER
 ) WHERE RNUM BETWEEN #{start} AND #{end}
 </select>
 
+<select id="getAllUserList"
+resultType="project.jyland.member.model.JYUser">
+SELECT ID, UPWD, NICKNAME, EMAIL, AUTH
+FROM JYUSER
+</select>
+
 <select id="getUserTotalCount"
 parameterType="project.jyland.member.model.JYUserParam"
 resultType="java.lang.Integer">

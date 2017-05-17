@@ -52,29 +52,52 @@
 		onMessage(event)
 	};
 	function onMessage(event) {
+		var filter=/[0-9|a-f]/i;
 		var message = event.data.split("|");
 		var sender = message[0];
 		var content = message[1];
 		if (content == "") {
 			console.log(content + "aaaaaa");
 		} else {
-			if (content.includes("/")) {
-				if (content.includes(("/" + $("#chat_id").val()))) {
-					var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
-					if (temp[1].trim() == "") {
+			if(filter.test(sender)==true) {
+				if (content.includes("/")) {
+					if (content.includes(("/" + $("#chat_id").val()))) {
+						var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
+						if (temp[1].trim() == "") {
+						} else {
+							$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
+								+ sender + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
+						}
 					} else {
-						$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
-							+ sender + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
 					}
 				} else {
+					if (content.includes("!")) {
+						$("#messageWindow").html($("#messageWindow").html()
+							+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
+					} else {
+						$("#messageWindow").html($("#messageWindow").html()
+							+ "<p class='chat_content' style='color:#"+sender+"'>" + sender + " : " + content + "</p>");
+					}
 				}
-			} else {
-				if (content.includes("!")) {
-					$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
+			}else {
+				if (content.includes("/")) {
+					if (content.includes(("/" + $("#chat_id").val()))) {
+						var temp = content.replace("/" + $("#chat_id").val(), "(귓속말) :").split(":");
+						if (temp[1].trim() == "") {
+						} else {
+							$("#messageWindow").html($("#messageWindow").html() + "<p class='whisper'>"
+								+ sender + content.replace("/" + $("#chat_id").val(), "(귓속말) :") + "</p>");
+						}
+					} else {
+					}
 				} else {
-					$("#messageWindow").html($("#messageWindow").html()
-						+ "<p class='chat_content'>" + sender + " : " + content + "</p>");
+					if (content.includes("!")) {
+						$("#messageWindow").html($("#messageWindow").html()
+							+ "<p class='chat_content'><b class='impress'>" + sender + " : " + content + "</b></p>");
+					} else {
+						$("#messageWindow").html($("#messageWindow").html()
+							+ "<p class='chat_content' style='color:#"+sender+"'>" + sender + " : " + content + "</p>");
+					}
 				}
 			}
 		}
