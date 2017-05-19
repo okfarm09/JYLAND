@@ -45,8 +45,8 @@
 		</div>
 		<div class="">
 			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${boarddetail.readcount}</span>
-			<img src="<%=request.getContextPath()%>/img/like.gif"><span>${boarddetail.likecount}</span>
-			<img src="<%=request.getContextPath()%>/img/hate.gif"><span>${boarddetail.hatecount}</span>
+			<img src="<%=request.getContextPath()%>/img/like.gif"><span id="_like_count">${boarddetail.likecount}</span>
+			<img src="<%=request.getContextPath()%>/img/hate.gif"><span id="_hate_count">${boarddetail.hatecount}</span>
 		</div>
 		<div class="detail_content">
 			<div>
@@ -72,6 +72,8 @@
 		<c:if test="${login.auth eq 1 || login.auth eq 2}">
 			<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
 		</c:if>
+		<span onclick="like();" class=" hover_cursor">좋아요</span>
+		<span onclick="hate();" class=" hover_cursor">싫어요</span>
 		<span onclick="url_board1();" class=" hover_cursor">목록</span>
 		<c:if test="${login.id eq boarddetail.id }">
 			<span onclick="detail_update();" class=" hover_cursor">수정</span>
@@ -131,8 +133,35 @@ $(function() {
 });
 </script>
 <script type="text/javascript">
-function cancel(seq) {
-	 $("#_reply_input"+seq).css("display", "none");
+function like() {
+	$.ajax({
+		url : "like.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
+}
+function hate() {
+	$.ajax({
+		url : "hate.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
 }
 function getcomment(){
     $.ajax({
@@ -163,10 +192,10 @@ function getcomment(){
                "<tr style='display:none' id='_reply_input"+obj.seq+"' class='_reply_inputs'>"+"<td colspan='5'>"+ 
                "<input type='text' id='_reply_txt"+obj.seq+"'/><input type='button' value='댓글입력' id='_reply_btn"+ 
                obj.seq+"' onclick='reply_comment("+obj.seq+")'>"+ 
-               "<input type='button' value='취소' onclick=\"cancel('"+obj.seq+"')\"></td>"+"</tr>" +
+               "</td>"+"</tr>" +
                "</c:if>";
             }else {
-            	a += "<tr><td style='text-align: left' class='reply_content' onclick=\"comment_comment('"+obj.seq+"')\">&nbsp;&nbsp;&nbsp;" + 
+            	a += "<tr><td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;" + 
                 obj.content + "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
                 + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
                 if($("#_login_id").val()==obj.id) {
@@ -211,10 +240,15 @@ function getcomment(){
 			getcomment();
 		}
 	 });
- }
- function comment_comment(seq) {
-	 $("._reply_inputs").css("display", "none");
-	 $("#_reply_input"+seq).css("display", "table-row");
+}
+var ri=null;
+var rit=0;
+function comment_comment(seq) {
+	 $("#_reply_input"+seq).toggle("slow");
+	if(ri!=$("#_reply_input"+seq)&&ri!=null) {
+		ri.hide("slow");
+	}
+	 ri=$("#_reply_input"+seq);
 }
 getcomment();
 

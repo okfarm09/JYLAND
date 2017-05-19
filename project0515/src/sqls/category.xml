@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Category">
+
+<select id="getCatList"
+resultType="project.jyland.board.model.JYCat">
+SELECT CATID, CATNAME FROM JYCAT WHERE CATID!=0
+</select>
+
+<insert id="createCategory"
+parameterType="project.jyland.board.model.JYCat">
+INSERT INTO JYCAT(CATID, CATNAME) 
+VALUES((SELECT NVL(MAX(CATID),0)+1 FROM JYCAT), #{catname})
+</insert>
+
+</mapper>

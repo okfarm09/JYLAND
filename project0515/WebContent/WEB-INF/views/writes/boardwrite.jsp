@@ -70,6 +70,13 @@
 		}
 	}
 </script>
+<script type="text/javascript">
+$(function() {
+	$("._content").on("click", function() {
+		$(this).focus();
+	});
+});
+</script>
 <script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsfCP6fzs0kw5N8hmmptZAgV5uChrSyA8&callback=initMap">
 </script>

@@ -108,4 +108,33 @@ parameterType="project.jyland.board.model.JYBoard">
 UPDATE JYBOARD SET NOTICE=1 WHERE SEQ=#{seq}
 </update>
 
+<update id="updateLikecount"
+parameterType="project.jyland.board.model.JYBoard">
+UPDATE JYBOARD SET LIKECOUNT=LIKECOUNT+1 WHERE SEQ=#{seq}
+</update>
+
+<update id="updateHatecount"
+parameterType="project.jyland.board.model.JYBoard">
+UPDATE JYBOARD SET HATECOUNT=HATECOUNT+1 WHERE SEQ=#{seq}
+</update>
+
+<select id="getLHCount"
+resultType="project.jyland.board.model.JYBoard">
+SELECT LIKECOUNT, HATECOUNT FROM JYBOARD 
+WHERE SEQ=#{seq}
+</select>
+
+<insert id="setLikeHate"
+parameterType="project.jyland.board.model.JYBoardLHCount">
+INSERT INTO JYBOARDLHCOUNT(SEQ, BOARDSEQ, USERID) 
+VALUES(JY_LH_SEQ.NEXTVAL, #{boardseq}, #{userid})
+</insert>
+
+<select id="checkLikeHate"
+parameterType="project.jyland.board.model.JYBoardLHCount"
+resultType="java.lang.Integer">
+SELECT COUNT(*) FROM JYBOARDLHCOUNT 
+WHERE USERID=#{userid} AND BOARDSEQ=#{boardseq}
+</select>
+
 </mapper>

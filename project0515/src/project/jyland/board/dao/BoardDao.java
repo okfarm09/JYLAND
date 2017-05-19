@@ -3,6 +3,7 @@ package project.jyland.board.dao;
 import java.util.List;
 
 import project.jyland.board.model.JYBoard;
+import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardParam;
 
 public interface BoardDao {
@@ -20,4 +21,9 @@ public interface BoardDao {
 	List<JYBoard> getGlobalNoticeList();
 	List<JYBoard> getLocalNoticeList(JYBoardParam param);
 	void goNotice(JYBoard board);
+	void updateLikecount(JYBoard board);
+	void updateHatecount(JYBoard board);
+	void setLikeHate(JYBoardLHCount board);
+	JYBoard getLHCount(JYBoard board);
+	int checkLikeHate(JYBoardLHCount board);
 }
