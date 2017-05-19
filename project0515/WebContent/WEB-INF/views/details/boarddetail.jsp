@@ -45,8 +45,8 @@
 		</div>
 		<div class="">
 			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${boarddetail.readcount}</span>
-			<img src="<%=request.getContextPath()%>/img/like.gif"><span>${boarddetail.likecount}</span>
-			<img src="<%=request.getContextPath()%>/img/hate.gif"><span>${boarddetail.hatecount}</span>
+			<img src="<%=request.getContextPath()%>/img/like.gif"><span id="_like_count">${boarddetail.likecount}</span>
+			<img src="<%=request.getContextPath()%>/img/hate.gif"><span id="_hate_count">${boarddetail.hatecount}</span>
 		</div>
 		<div class="detail_content">
 			<div>
@@ -69,6 +69,8 @@
 			<div>${boarddetail.content}</div>
 		</div>
 		<div class="buttons">
+		<span onclick="like();" class=" hover_cursor">좋아요</span>
+		<span onclick="hate();" class=" hover_cursor">싫어요</span>
 		<span onclick="url_board1();" class=" hover_cursor">목록</span>
 		<c:if test="${login.id eq boarddetail.id }">
 			<span onclick="detail_update();" class=" hover_cursor">수정</span>
@@ -125,6 +127,36 @@ $(function() {
 });
 </script>
 <script type="text/javascript">
+function like() {
+	$.ajax({
+		url : "like.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
+}
+function hate() {
+	$.ajax({
+		url : "hate.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
+}
 function getcomment(){
     $.ajax({
          url:"getCommentList.jy",

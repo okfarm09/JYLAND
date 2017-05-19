@@ -3,6 +3,7 @@ package project.jyland.board.dao;
 import java.util.List;
 
 import project.jyland.board.model.JYBoard;
+import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardParam;
 
 public interface BoardDao {
@@ -16,4 +17,9 @@ public interface BoardDao {
 	int getBoardTotalCount(JYBoardParam param);
 	List<JYBoard> getRecentList();
 	void updateReadcount(JYBoard board);
+	void updateLikecount(JYBoard board);
+	void updateHatecount(JYBoard board);
+	void setLikeHate(JYBoardLHCount board);
+	JYBoard getLHCount(JYBoard board);
+	int checkLikeHate(JYBoardLHCount board);
 }

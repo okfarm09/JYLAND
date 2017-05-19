@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import project.jyland.board.dao.BoardService;
 import project.jyland.board.help.FUpUtil;
+import project.jyland.board.help.LHCount;
 import project.jyland.board.model.JYBoard;
+import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
 
@@ -124,8 +126,8 @@ public class BoardController {
 	@RequestMapping(value = "boarddetail.jy", method = { RequestMethod.POST, RequestMethod.GET })
 	public String freedetail(JYBoard board, Model model) {
 		logger.info("Welcome BoardController boarddetail! ---------------------------------------");
-		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
 		boardService.updateReadcount(board);
+		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
 		model.addAttribute("boarddetail", bm);
 		logger.info("Welcome BoardController boarddetail! " + bm);
 		return "boarddetail.tiles";
@@ -185,6 +187,52 @@ public class BoardController {
 		logger.info("Welcome BoardController getDel " + new Date());
 		JYBoard bb= boardService.getBoard(board);
 		return bb;
+	}
+	
+	@RequestMapping(value = "like.jy", method={RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody LHCount like(JYBoardLHCount board, Model model) {
+		logger.info("Welcome BoardController like " + new Date());
+		JYBoard bbb=new JYBoard();
+		bbb.setSeq(board.getBoardseq());
+		int count=boardService.checkLikeHate(board);
+		LHCount lh=new LHCount();
+		logger.info("Welcome BoardController like " + count);
+		if(count>0) {
+			lh.setMessage("추천할 수 없사와요");
+			logger.info("Welcome BoardController like fail!");
+		}else {
+			boardService.updateLikecount(bbb);
+			boardService.setLikeHate(board);
+			lh.setMessage("추천했사와요");
+			logger.info("Welcome BoardController like success!");
+		}
+		JYBoard temp=boardService.getLHCount(bbb);
+		lh.setLikecount(temp.getLikecount());
+		lh.setHatecount(temp.getHatecount());
+		return lh;
+	}
+	
+	@RequestMapping(value = "hate.jy", method={RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody LHCount hate(JYBoardLHCount board, Model model) {
+		logger.info("Welcome BoardController hate " + new Date());
+		JYBoard bbb=new JYBoard();
+		bbb.setSeq(board.getBoardseq());
+		int count=boardService.checkLikeHate(board);
+		LHCount lh=new LHCount();
+		logger.info("Welcome BoardController hate " + count);
+		if(count>0) {
+			lh.setMessage("반대할 수 없사와요");
+			logger.info("Welcome BoardController hate fail!");
+		}else {
+			boardService.updateHatecount(bbb);
+			boardService.setLikeHate(board);
+			lh.setMessage("반대했사와요");
+			logger.info("Welcome BoardController hate success!");
+		}
+		JYBoard temp=boardService.getLHCount(bbb);
+		lh.setLikecount(temp.getLikecount());
+		lh.setHatecount(temp.getHatecount());
+		return lh;
 	}
 
 }

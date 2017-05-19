@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.jyland.board.model.JYBoard;
+import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardParam;
 
 @Service
@@ -46,11 +47,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public String getCatName(int catid) {
 		return boardDao.getCatName(catid);
 	}
 
 	@Override
+	@Transactional
 	public void writeBoard(JYBoard board) {
 		boardDao.writeBoard(board);
 	}
@@ -62,8 +65,39 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public void updateReadcount(JYBoard board) {
 		boardDao.updateReadcount(board);
+	}
+
+	@Override
+	@Transactional
+	public void updateLikecount(JYBoard board) {
+		boardDao.updateLikecount(board);
+	}
+
+	@Override
+	@Transactional
+	public void updateHatecount(JYBoard board) {
+		boardDao.updateHatecount(board);
+	}
+
+	@Override
+	@Transactional
+	public void setLikeHate(JYBoardLHCount board) {
+		boardDao.setLikeHate(board);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public JYBoard getLHCount(JYBoard board) {
+		return boardDao.getLHCount(board);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int checkLikeHate(JYBoardLHCount board) {
+		return boardDao.checkLikeHate(board);
 	}
 
 
