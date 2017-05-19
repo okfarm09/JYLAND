@@ -18,7 +18,7 @@ import project.jyland.comment.model.JYComment;
 @Controller
 public class CommentController {
 	
-	Logger logger = LoggerFactory.getLogger(CommentController.class);
+	private static Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
 	CommentService CommentService;
