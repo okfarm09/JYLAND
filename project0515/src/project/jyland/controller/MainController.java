@@ -46,6 +46,9 @@ public class MainController {
 			board.setDateForMain(MainHelper.mmdd(board.getWdate()));
 		}
 		
+		List<JYBoard> noticelist = boardService.getGlobalNoticeList();
+		
+		model.addAttribute("noticelist", noticelist);
 		model.addAttribute("bestlist", bestlist);
 		model.addAttribute("recentlist", recentlist);
 		request.getSession().setAttribute("categorylist", categoryService.getCatList());
