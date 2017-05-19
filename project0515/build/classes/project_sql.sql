@@ -31,6 +31,8 @@ INSERT INTO JYCAT VALUES(2, '토론게시판');
 INSERT INTO JYCAT VALUES(3, '사진게시판');
 INSERT INTO JYCAT VALUES(4, '보드게시판');
 INSERT INTO JYCAT VALUES(5, '신고게시판');
+INSERT INTO JYCAT VALUES(6, '만화게시판');
+INSERT INTO JYCAT VALUES(7, '영화게시판');
 
 SELECT seq, id, title, content, wdate FROM
 (SELECT ROW_NUMBER() over(ORDER BY seq DESC) AS rnum,
@@ -66,4 +68,4 @@ WHERE ID='22'
 SELECT constraint_name, search_condition FROM user_constraints where table_name = 'jyuser';
 ALTER TABLE JYUSER DROP CONSTRAINT PROJECT.SYS_C007386 
 
-
+SELECT CATID, CATNAME FROM JYCAT WHERE CATID!=0;
