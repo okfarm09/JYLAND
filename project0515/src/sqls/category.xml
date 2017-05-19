@@ -13,7 +13,7 @@ SELECT CATID, CATNAME FROM JYCAT WHERE CATID!=0
 <insert id="createCategory"
 parameterType="project.jyland.board.model.JYCat">
 INSERT INTO JYCAT(CATID, CATNAME) 
-VALUES(NVL(MAX(CATID),0)+1, #{catname})
+VALUES((SELECT NVL(MAX(CATID),0)+1 FROM JYCAT), #{catname})
 </insert>
 
 </mapper>
