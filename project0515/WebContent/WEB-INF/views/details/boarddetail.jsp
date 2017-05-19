@@ -125,9 +125,6 @@ $(function() {
 });
 </script>
 <script type="text/javascript">
-function cancel(seq) {
-	 $("#_reply_input"+seq).css("display", "none");
-}
 function getcomment(){
     $.ajax({
          url:"getCommentList.jy",
@@ -156,10 +153,10 @@ function getcomment(){
                "<tr style='display:none' id='_reply_input"+obj.seq+"' class='_reply_inputs'>"+"<td colspan='5'>"+ 
                "<input type='text' id='_reply_txt"+obj.seq+"'/><input type='button' value='댓글입력' id='_reply_btn"+ 
                obj.seq+"' onclick='reply_comment("+obj.seq+")'>"+ 
-               "<input type='button' value='취소' onclick=\"cancel('"+obj.seq+"')\"></td>"+"</tr>" +
+               "</td>"+"</tr>" +
                "</c:if>";
             }else {
-            	a += "<tr><td style='text-align: left' class='reply_content' onclick=\"comment_comment('"+obj.seq+"')\">&nbsp;&nbsp;&nbsp;" + 
+            	a += "<tr><td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;" + 
                 obj.content + "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
                 + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
                 if($("#_login_id").val()==obj.id) {
@@ -204,10 +201,15 @@ function getcomment(){
 			getcomment();
 		}
 	 });
- }
- function comment_comment(seq) {
-	 $("._reply_inputs").css("display", "none");
-	 $("#_reply_input"+seq).css("display", "table-row");
+}
+var ri=null;
+var rit=0;
+function comment_comment(seq) {
+	 $("#_reply_input"+seq).toggle("slow");
+	if(ri!=$("#_reply_input"+seq)&&ri!=null) {
+		ri.hide("slow");
+	}
+	 ri=$("#_reply_input"+seq);
 }
 getcomment();
 
