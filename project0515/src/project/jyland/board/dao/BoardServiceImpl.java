@@ -118,5 +118,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.checkLikeHate(board);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYBoard> getBestList() {
+		return boardDao.getBestList();
+	}
+
 
 }

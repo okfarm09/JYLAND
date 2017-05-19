@@ -26,4 +26,5 @@ public interface BoardDao {
 	void setLikeHate(JYBoardLHCount board);
 	JYBoard getLHCount(JYBoard board);
 	int checkLikeHate(JYBoardLHCount board);
+	List<JYBoard> getBestList();
 }

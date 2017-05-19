@@ -39,6 +39,14 @@ public class MainController {
 			board.setTitle(MainHelper.message(board.getTitle()));
 			board.setDateForMain(MainHelper.mmdd(board.getWdate()));
 		}
+		
+		List<JYBoard> bestlist = boardService.getBestList();
+		for (JYBoard board : bestlist) {
+			board.setTitle(MainHelper.message(board.getTitle()));
+			board.setDateForMain(MainHelper.mmdd(board.getWdate()));
+		}
+		
+		model.addAttribute("bestlist", bestlist);
 		model.addAttribute("recentlist", recentlist);
 		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		return "mainpage.tiles";

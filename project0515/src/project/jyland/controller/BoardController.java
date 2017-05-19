@@ -26,7 +26,6 @@ import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
-import project.jyland.comment.model.JYComment;
 
 @Controller
 public class BoardController {

@@ -101,4 +101,9 @@ public class BoardDaoImpl implements BoardDao {
 	public int checkLikeHate(JYBoardLHCount board) {
 		return sqlSession.selectOne(ns+"checkLikeHate", board);
 	}
+
+	@Override
+	public List<JYBoard> getBestList() {
+		return sqlSession.selectList(ns+"getBestList");
+	}
 }

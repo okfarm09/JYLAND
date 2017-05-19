@@ -179,9 +179,14 @@ function getcomment(){
 				"</colgroup>"
             $.each(data,function(i,obj){
             if(obj.seqReply==0) {
-               a += "<tr><td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">" + 
-               "<c:if test='${obj.delflag eq 0}'>" +
-               obj.content + "</c:if><c:if test='${obj.delflag eq 1}'>삭제된 댓글입니다</c:if></td><td>" + 
+               a += "<tr>";
+               if(obj.delflag==0) {
+            	   a += "<td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">";
+	               a += obj.content;         	   
+               } else {
+            	   a += "<td>삭제되었노라";
+               }
+               a += "</td><td>" + 
                obj.id + "</td><td>" + obj.wdate + "</td><td>"
                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
                if($("#_login_id").val()==obj.id) {
@@ -194,9 +199,14 @@ function getcomment(){
                obj.seq+"' onclick='reply_comment("+obj.seq+")'>"+ 
                "</td>"+"</tr>" +
                "</c:if>";
-            }else {
-            	a += "<tr><td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;" + 
-                obj.content + "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
+            } else {
+            	a += "<tr><td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;";
+            	if(obj.delflag==0) {
+ 	               a += obj.content;         	   
+                }else {
+             	   a += "삭제되었노라";
+                }
+                a += "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
                 + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
                 if($("#_login_id").val()==obj.id) {
              	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
@@ -218,8 +228,8 @@ function getcomment(){
 	 $.ajax({
 		 url: "deleteComment.jy",
 		 data: {
-			 boardseq : "${boarddetail.seq}",
-			 seqReply : seq
+			 seq : seq,
+			 boardseq : "${boarddetail.seq}"
 		 },
 		 success: function(data) {
 			 getcomment();
