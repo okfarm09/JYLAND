@@ -44,6 +44,48 @@
 				</tr>
 			</thead>
 			<tbody>
+				<c:if test="${empty GlobalNoticeList}">
+					<tr>
+						<td colspan="5">전체 공지가 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:forEach items="${GlobalNoticeList}" var="global">
+					<tr class="_hover_tr">
+						<td>전체공지</td>
+						<td style="text-align: left"><a
+							href='boarddetail.jy?seq=${global.seq}'> ${global.title}</a></td>
+						<td><c:if test="${global.id ne login.id }">
+								<span class="hover_cursor"
+									onclick="url_user_info('${global.id}')">${global.id}</span>
+							</c:if> <c:if test="${global.id eq login.id }">
+								<span class="hover_cursor" onclick="url_my_info();">${global.id}</span>
+							</c:if></td>
+						<td>${global.wdate}</td>
+						<td>${global.readcount}</td>
+					</tr>
+				</c:forEach>
+				
+				<c:if test="${empty LocalNoticeList}">
+					<tr>
+						<td colspan="5">게시판 공지가 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:forEach items="${LocalNoticeList}" var="local">
+					<tr class="_hover_tr">
+						<td>${doc_title}</td>
+						<td style="text-align: left"><a
+							href='boarddetail.jy?seq=${local.seq}'> ${local.title}</a></td>
+						<td><c:if test="${local.id ne login.id }">
+								<span class="hover_cursor"
+									onclick="url_user_info('${local.id}')">${local.id}</span>
+							</c:if> <c:if test="${local.id eq login.id }">
+								<span class="hover_cursor" onclick="url_my_info();">${local.id}</span>
+							</c:if></td>
+						<td>${local.wdate}</td>
+						<td>${local.readcount}</td>
+					</tr>
+				</c:forEach>
+				
 				<c:if test="${empty boardlist}">
 					<tr>
 						<td colspan="5">작성된 글이 없습니다.</td>

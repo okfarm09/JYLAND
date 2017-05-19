@@ -24,6 +24,10 @@
 	color: white;
 	text-align: center;
 }
+
+/* ._comment_wdate { */
+/* 	font-size: 8pt; */
+/* } */
 -->
 </style>
 <div class="boarddetail_wrap">
@@ -45,8 +49,8 @@
 		</div>
 		<div class="">
 			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${boarddetail.readcount}</span>
-			<img src="<%=request.getContextPath()%>/img/like.gif"><span>${boarddetail.likecount}</span>
-			<img src="<%=request.getContextPath()%>/img/hate.gif"><span>${boarddetail.hatecount}</span>
+			<img src="<%=request.getContextPath()%>/img/like.gif"><span id="_like_count">${boarddetail.likecount}</span>
+			<img src="<%=request.getContextPath()%>/img/hate.gif"><span id="_hate_count">${boarddetail.hatecount}</span>
 		</div>
 		<div class="detail_content">
 			<div>
@@ -69,6 +73,11 @@
 			<div>${boarddetail.content}</div>
 		</div>
 		<div class="buttons">
+		<c:if test="${login.auth eq 1 || login.auth eq 2}">
+			<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
+		</c:if>
+		<span onclick="like();" class=" hover_cursor">좋아요</span>
+		<span onclick="hate();" class=" hover_cursor">싫어요</span>
 		<span onclick="url_board1();" class=" hover_cursor">목록</span>
 		<c:if test="${login.id eq boarddetail.id }">
 			<span onclick="detail_update();" class=" hover_cursor">수정</span>
@@ -94,6 +103,9 @@
 	}
 	function detail_delete() {
 		$("#_detail_form").attr("action","detaildelete.jy").submit();
+	}
+	function detail_goNotice() {
+		$("#_detail_form").attr("action", "goNotice.jy").submit();
 	}
 </script>
 <script>
@@ -125,8 +137,35 @@ $(function() {
 });
 </script>
 <script type="text/javascript">
-function cancel(seq) {
-	 $("#_reply_input"+seq).css("display", "none");
+function like() {
+	$.ajax({
+		url : "like.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
+}
+function hate() {
+	$.ajax({
+		url : "hate.jy",
+		data : {
+			boardseq : "${boarddetail.seq}",
+			userid : "${login.id}"
+		},
+		method : "POST",
+		success : function(data) {
+			$("#_like_count").html(data.likecount);
+			$("#_hate_count").html(data.hatecount);
+			alert(data.message);
+		}
+	});
 }
 function getcomment(){
     $.ajax({
@@ -144,28 +183,43 @@ function getcomment(){
 				"</colgroup>"
             $.each(data,function(i,obj){
             if(obj.seqReply==0) {
-               a += "<tr><td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">" + 
-               obj.content + "</td><td>" + 
-               obj.id + "</td><td>" + obj.wdate + "</td><td>"
-               + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
-               if($("#_login_id").val()==obj.id) {
-            	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+               a += "<tr>";
+               if(obj.delflag==0) {
+            	   a += "<td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">";
+	               a += obj.content; 
+	               a += "</td><td>" + 
+	               obj.id + "</td><td class='_comment_wdate'>" + obj.wdate + "</td><td>"
+	               + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
+	               if($("#_login_id").val()==obj.id) {
+	            	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+	               }
+	               a += "</tr>";
+               } else {
+            	   a += "<td colspan='5'>삭제되었노라</td>" +
+            	   "</tr>";
                }
-               a += "</tr>" + 
-               "<c:if test='${not empty login.id }'>" + 
+               
+               a += "<c:if test='${not empty login.id }'>" + 
                "<tr style='display:none' id='_reply_input"+obj.seq+"' class='_reply_inputs'>"+"<td colspan='5'>"+ 
                "<input type='text' id='_reply_txt"+obj.seq+"'/><input type='button' value='댓글입력' id='_reply_btn"+ 
                obj.seq+"' onclick='reply_comment("+obj.seq+")'>"+ 
-               "<input type='button' value='취소' onclick=\"cancel('"+obj.seq+"')\"></td>"+"</tr>" +
+               "</td>"+"</tr>" +
                "</c:if>";
-            }else {
-            	a += "<tr><td style='text-align: left' class='reply_content' onclick=\"comment_comment('"+obj.seq+"')\">&nbsp;&nbsp;&nbsp;" + 
-                obj.content + "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
-                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
-                if($("#_login_id").val()==obj.id) {
-             	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+            } else {
+            	a += "<tr>";
+            	if(obj.delflag==0) {
+ 	               a += "<td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;"+obj.content;
+ 	              a += "</td><td>" + obj.id + "</td><td class='_comment_wdate'>" + obj.wdate + "</td><td>"
+ 	                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
+ 	                if($("#_login_id").val()==obj.id) {
+ 	             	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+ 	                }
+ 	                a +="</tr>";
+                }else {
+                	a += "<td colspan='5'>&nbsp;&nbsp;&nbsp;삭제되었노라</td>"+
+            	   "</tr>";
                 }
-                a +="</tr>";
+                
             }
 	})
             a += "</table>";
@@ -182,8 +236,8 @@ function getcomment(){
 	 $.ajax({
 		 url: "deleteComment.jy",
 		 data: {
-			 boardseq : "${boarddetail.seq}",
-			 seqReply : seq
+			 seq : seq,
+			 boardseq : "${boarddetail.seq}"
 		 },
 		 success: function(data) {
 			 getcomment();
@@ -204,10 +258,15 @@ function getcomment(){
 			getcomment();
 		}
 	 });
- }
- function comment_comment(seq) {
-	 $("._reply_inputs").css("display", "none");
-	 $("#_reply_input"+seq).css("display", "table-row");
+}
+var ri=null;
+var rit=0;
+function comment_comment(seq) {
+	 $("#_reply_input"+seq).toggle("slow");
+	if(ri!=$("#_reply_input"+seq)&&ri!=null) {
+		ri.hide("slow");
+	}
+	 ri=$("#_reply_input"+seq);
 }
 getcomment();
 

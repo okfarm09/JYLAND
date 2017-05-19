@@ -50,7 +50,7 @@ public class LoginController {
 		logger.info("Welcome LoginController login!---- " + login);
 		if (login != null && !login.getId().equals("")) {
 			request.getSession().setAttribute("login", login);
-			request.getSession().setMaxInactiveInterval(60 * 60 * 24);
+			request.getSession().setMaxInactiveInterval(60 * 60);
 			return "forward:/main.jy";
 		} else {
 			request.getSession().invalidate();
