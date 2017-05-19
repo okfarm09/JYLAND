@@ -34,11 +34,10 @@
 <span onclick="url_mycomment('${login.id}')" class="hover_cursor">내댓글보기</span>
 <c:if test="${login.auth eq 1 }">
 	<span onclick="url_userlist()" class="hover_cursor">회원관리</span>
+	<span class="write_btn hover_cursor" onclick="url_boardwrite(0)" >공지글쓰기</span>
 </c:if>
 </div>
 </div>
-
-
 
 
 

@@ -46,11 +46,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public String getCatName(int catid) {
 		return boardDao.getCatName(catid);
 	}
 
 	@Override
+	@Transactional
 	public void writeBoard(JYBoard board) {
 		boardDao.writeBoard(board);
 	}
@@ -62,8 +64,26 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public void updateReadcount(JYBoard board) {
 		boardDao.updateReadcount(board);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYBoard> getGlobalNoticeList() {
+		return boardDao.getGlobalNoticeList();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYBoard> getLocalNoticeList(JYBoardParam param) {
+		return boardDao.getLocalNoticeList(param);
+	}
+
+	@Override
+	public void goNotice(JYBoard board) {
+		boardDao.goNotice(board);
 	}
 
 

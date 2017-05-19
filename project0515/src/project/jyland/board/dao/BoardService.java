@@ -17,4 +17,7 @@ public interface BoardService {
 	List<JYBoard> getRecentList();
 	void updateReadcount(JYBoard board);
 
+	List<JYBoard> getGlobalNoticeList();
+	List<JYBoard> getLocalNoticeList(JYBoardParam param);
+	void goNotice(JYBoard board);
 }

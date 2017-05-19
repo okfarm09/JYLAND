@@ -60,4 +60,19 @@ public class BoardDaoImpl implements BoardDao {
 	public void updateReadcount(JYBoard board) {
 		sqlSession.update(ns+"updateReadcount", board);
 	}
+
+	@Override
+	public List<JYBoard> getGlobalNoticeList() {
+		return sqlSession.selectList(ns+"getGlobalNoticeList");
+	}
+
+	@Override
+	public List<JYBoard> getLocalNoticeList(JYBoardParam param) {
+		return sqlSession.selectList(ns+"getLocalNoticeList", param);
+	}
+
+	@Override
+	public void goNotice(JYBoard board) {
+		sqlSession.update(ns+"goNotice",board);
+	}
 }

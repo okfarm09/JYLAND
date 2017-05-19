@@ -24,6 +24,7 @@ import project.jyland.board.help.FUpUtil;
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
+import project.jyland.comment.model.JYComment;
 
 @Controller
 public class BoardController {
@@ -50,7 +51,15 @@ public class BoardController {
 
 		List<JYBoard> boardlist = boardService.getBoardPageList(param);
 		logger.info("Welcome BoardController board list! " + boardlist.size());
-
+		
+		List<JYBoard> GlobalNoticeList = boardService.getGlobalNoticeList();
+		logger.info("Welcome BoardController getGlobalNoticeList! " + GlobalNoticeList);
+		
+		List<JYBoard> LocalNoticeList = boardService.getLocalNoticeList(param);
+		logger.info("Welcome BoardController getLocalNoticeList! " + LocalNoticeList);
+		
+		model.addAttribute("LocalNoticeList", LocalNoticeList);
+		model.addAttribute("GlobalNoticeList", GlobalNoticeList);
 		model.addAttribute("doc_title", boardService.getCatName(param.getCatid()));
 		model.addAttribute("boardlist", boardlist);
 
@@ -186,5 +195,30 @@ public class BoardController {
 		JYBoard bb= boardService.getBoard(board);
 		return bb;
 	}
-
+	
+	@RequestMapping(value = "goNotice.jy", method=RequestMethod.POST)
+	public String goNotice(JYBoard board, Model model) {
+		logger.info("Welcome BoardController goNotice " + new Date());
+		boardService.goNotice(board);
+		return "redirect:/board.jy?catid="+board.getCatid();
+	}
+	
+	
+//	@RequestMapping(value = "getGlobalNoticeList.jy", method = {RequestMethod.GET, RequestMethod.POST})
+//	public List<JYBoard> getGlobalNoticeList(JYBoard board,Model model) {
+//		logger.info("Welcome BoardController getGlobalNoticeList! =================================================" + new Date());
+//		List<JYBoard> GlobalNoticeList = boardService.getGlobalNoticeList();
+//		logger.info("Welcome BoardController getGlobalNoticeList! " + GlobalNoticeList);
+//		model.addAttribute("GlobalNoticeList", GlobalNoticeList);
+//		return GlobalNoticeList;
+//	}
+//	
+//	@RequestMapping(value = "getLocalNoticeList.jy", method = {RequestMethod.GET, RequestMethod.POST})
+//	public List<JYBoard> getLocalNoticeList(JYBoardParam board,Model model) {
+//		logger.info("Welcome BoardController getLocalNoticeList! " + new Date());
+//		List<JYBoard> LocalNoticeList = boardService.getLocalNoticeList(board);
+//		logger.info("Welcome BoardController getLocalNoticeList! " + LocalNoticeList);
+//		model.addAttribute("LocalNoticeList", LocalNoticeList);
+//		return LocalNoticeList;
+//	}
 }

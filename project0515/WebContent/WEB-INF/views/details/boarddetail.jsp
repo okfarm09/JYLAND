@@ -69,6 +69,9 @@
 			<div>${boarddetail.content}</div>
 		</div>
 		<div class="buttons">
+		<c:if test="${login.auth eq 1 || login.auth eq 2}">
+			<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
+		</c:if>
 		<span onclick="url_board1();" class=" hover_cursor">목록</span>
 		<c:if test="${login.id eq boarddetail.id }">
 			<span onclick="detail_update();" class=" hover_cursor">수정</span>
@@ -94,6 +97,9 @@
 	}
 	function detail_delete() {
 		$("#_detail_form").attr("action","detaildelete.jy").submit();
+	}
+	function detail_goNotice() {
+		$("#_detail_form").attr("action", "goNotice.jy").submit();
 	}
 </script>
 <script>
@@ -145,7 +151,8 @@ function getcomment(){
             $.each(data,function(i,obj){
             if(obj.seqReply==0) {
                a += "<tr><td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">" + 
-               obj.content + "</td><td>" + 
+               "<c:if test='${obj.delflag eq 0}'>" +
+               obj.content + "</c:if><c:if test='${obj.delflag eq 1}'>삭제된 댓글입니다</c:if></td><td>" + 
                obj.id + "</td><td>" + obj.wdate + "</td><td>"
                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
                if($("#_login_id").val()==obj.id) {

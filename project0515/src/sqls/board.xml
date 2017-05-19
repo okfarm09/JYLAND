@@ -59,7 +59,7 @@ WHERE SEQ=#{seq}
 </update>
 
 <update id="deleteBoard"
-parameterType="project.jyland.board.model.JYBoard">
+parameterType="project.jyland.board.model.JYBoardParam">
 UPDATE JYBOARD SET DEL=1 WHERE SEQ=#{seq}
 </update>
 
@@ -74,15 +74,38 @@ resultType="project.jyland.board.model.JYBoard">
 SELECT A.SEQ, A.TITLE, C.CATNAME,
 A.WDATE, A.CATID, A.DEL, A.COMMENTCOUNT 
 FROM (
-SELECT SEQ, TITLE, 
-WDATE, CATID, DEL, NVL(COMMENTCOUNT, 0)COMMENTCOUNT
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM,
+SEQ, TITLE, WDATE, CATID, DEL, NVL(COMMENTCOUNT, 0)COMMENTCOUNT
 FROM JYBOARD 
 LEFT JOIN (SELECT BOARDSEQ, COUNT(JYCOMMENT.SEQ) AS COMMENTCOUNT 
 FROM JYCOMMENT GROUP BY BOARDSEQ) 
 ON SEQ=BOARDSEQ 
-WHERE DEL=0
+WHERE DEL=0 AND NOT CATID=0
 ) A JOIN JYCAT C ON A.CATID=C.CATID
+WHERE RNUM BETWEEN 1 AND 20
 ORDER BY WDATE DESC
 </select>
+
+<select id="getGlobalNoticeList"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, NOTICE
+FROM JYBOARD
+WHERE CATID=0
+</select>
+
+<select id="getLocalNoticeList"
+parameterType="project.jyland.board.model.JYBoard"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, CONTENT, LOCATION, READCOUNT, LIKECOUNT, 
+HATECOUNT, WDATE, UPLOAD, CATID, DEL, IP, REGIONID, NOTICE
+FROM JYBOARD
+WHERE CATID=#{catid} AND NOTICE=1
+</select>
+
+<update id="goNotice"
+parameterType="project.jyland.board.model.JYBoard">
+UPDATE JYBOARD SET NOTICE=1 WHERE SEQ=#{seq}
+</update>
 
 </mapper>
