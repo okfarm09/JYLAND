@@ -24,6 +24,10 @@
 	color: white;
 	text-align: center;
 }
+
+/* ._comment_wdate { */
+/* 	font-size: 8pt; */
+/* } */
 -->
 </style>
 <div class="boarddetail_wrap">
@@ -182,36 +186,40 @@ function getcomment(){
                a += "<tr>";
                if(obj.delflag==0) {
             	   a += "<td style='text-align: left' class='reply_content hover_cursor' onclick=\"comment_comment('"+obj.seq+"')\">";
-	               a += obj.content;         	   
+	               a += obj.content; 
+	               a += "</td><td>" + 
+	               obj.id + "</td><td class='_comment_wdate'>" + obj.wdate + "</td><td>"
+	               + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
+	               if($("#_login_id").val()==obj.id) {
+	            	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+	               }
+	               a += "</tr>";
                } else {
-            	   a += "<td>삭제되었노라";
+            	   a += "<td colspan='5'>삭제되었노라</td>" +
+            	   "</tr>";
                }
-               a += "</td><td>" + 
-               obj.id + "</td><td>" + obj.wdate + "</td><td>"
-               + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
-               if($("#_login_id").val()==obj.id) {
-            	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
-               }
-               a += "</tr>" + 
-               "<c:if test='${not empty login.id }'>" + 
+               
+               a += "<c:if test='${not empty login.id }'>" + 
                "<tr style='display:none' id='_reply_input"+obj.seq+"' class='_reply_inputs'>"+"<td colspan='5'>"+ 
                "<input type='text' id='_reply_txt"+obj.seq+"'/><input type='button' value='댓글입력' id='_reply_btn"+ 
                obj.seq+"' onclick='reply_comment("+obj.seq+")'>"+ 
                "</td>"+"</tr>" +
                "</c:if>";
             } else {
-            	a += "<tr><td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;";
+            	a += "<tr>";
             	if(obj.delflag==0) {
- 	               a += obj.content;         	   
+ 	               a += "<td style='text-align: left' class='reply_content' >&nbsp;&nbsp;&nbsp;"+obj.content;
+ 	              a += "</td><td>" + obj.id + "</td><td class='_comment_wdate'>" + obj.wdate + "</td><td>"
+ 	                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
+ 	                if($("#_login_id").val()==obj.id) {
+ 	             	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
+ 	                }
+ 	                a +="</tr>";
                 }else {
-             	   a += "삭제되었노라";
+                	a += "<td colspan='5'>&nbsp;&nbsp;&nbsp;삭제되었노라</td>"+
+            	   "</tr>";
                 }
-                a += "</td><td>" + obj.id + "</td><td>" + obj.wdate + "</td><td>"
-                + obj.likecount + "</td><td>" + obj.hatecount + "</td>";
-                if($("#_login_id").val()==obj.id) {
-             	   a += "<td><i class='fa fa-times hover_cursor' onclick=\"delete_comment('"+obj.seq+"')\"></i></td>";
-                }
-                a +="</tr>";
+                
             }
 	})
             a += "</table>";
