@@ -100,7 +100,14 @@ public class BoardController {
 		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
-		String tempip = "000.000.000.000";
+		String tempip = request.getHeader("x-forwarded-for");
+		if(tempip==null) {
+			tempip=request.getRemoteAddr();
+		}
+		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getHeader("x-forwarded-for"));
+		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getRemoteHost());
+		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getRemoteAddr());
+		
 		// if(dto.getIp()==""||dto.getIp().equals(null)) {
 		dto.setIp(tempip);
 		// }
