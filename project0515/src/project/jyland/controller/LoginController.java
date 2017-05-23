@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardParam;
 import project.jyland.comment.model.JYComment;
+import project.jyland.helper.Sha;
 import project.jyland.member.dao.JYUserService;
 import project.jyland.member.model.JYUser;
 import project.jyland.member.model.JYUserParam;
@@ -33,8 +34,10 @@ public class LoginController {
 	@RequestMapping(value = "join.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(JYUser user, Model model) throws Exception {
 		logger.info("Welcome LoginController join! " + new Date());
+		String sha=Sha.sha3(user.getUpwd());
+		user.setUpwd(sha);
 		jYUserService.addUser(user);
-		return "mainpage.tiles";
+		return "forward:/main.jy";
 	}//
 
 	@RequestMapping(value = "checkId.jy", method = { RequestMethod.GET, RequestMethod.POST })
@@ -46,6 +49,8 @@ public class LoginController {
 	@RequestMapping(value = "login.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String login(HttpServletRequest request, JYUser user, Model model) {
 		logger.info("Welcome LoginController login! " + new Date());
+		String sha=Sha.sha3(user.getUpwd());
+		user.setUpwd(sha);
 		JYUser login = jYUserService.loginUser(user);
 		logger.info("Welcome LoginController login!---- " + login);
 		if (login != null && !login.getId().equals("")) {
@@ -57,6 +62,11 @@ public class LoginController {
 			return "redirect:/main.jy";
 		}
 	}//
+	
+	@RequestMapping(value = "checkpass.jy", method = RequestMethod.POST)
+	public @ResponseBody String checkpass(String rpwd, Model model) {
+		return Sha.sha3(rpwd);
+	}
 
 	@RequestMapping(value = "logout.jy", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, Model model) {
@@ -99,6 +109,9 @@ public class LoginController {
 		}
 		if (user.getUpwd() == null || user.getUpwd().equals("")) {
 			user.setUpwd(tempUser2.getUpwd());
+		}else {
+			String temppwd=Sha.sha3(user.getUpwd());
+			user.setUpwd(temppwd);
 		}
 		logger.info("Welcome LoginController infochangeAf! tempUser1-4: " + tempUser1);
 		jYUserService.updateUser(user);

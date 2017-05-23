@@ -7,15 +7,26 @@ function chack_pwd() {
 	}
 }
 function change_info(upwd) {
-	var rpwd = $("#_rpwd").val();
-	if ((upwd + "") != rpwd) {
-		$("#_rpwd").css("background-color", "#FFCECE");
-		$("#_rpwd").attr("placeholder", "Retry You Morron!");
-		$("#_rpwd").val("");
-	} else if ((upwd + "") == rpwd) {
-		$("#_rpwd_2").attr("value", (upwd + ""));
-		$("#_info_form").attr("action", "infochangeAf.jy").submit();
-	}
+	var rpwdd = $("#_rpwd").val();
+	var rpwd="";
+	$.ajax({
+		url : "checkpass.jy",
+		method : "POST",
+		data : {
+			rpwd : rpwdd
+		},
+		success : function(data) {
+			rpwd=data;
+			if ((upwd + "") != data) {
+				$("#_rpwd").css("background-color", "#FFCECE");
+				$("#_rpwd").attr("placeholder", "Retry You Morron!");
+				$("#_rpwd").val("");
+			} else if ((upwd + "") == data) {
+				$("#_rpwd_2").attr("value", (upwd + ""));
+				$("#_info_form").attr("action", "infochangeAf.jy").submit();
+			}
+		}
+	});
 }
 function clear_rwpd() {
 	$("#_rpwd").css("background-color", "#FFFFFF");

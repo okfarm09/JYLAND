@@ -13,8 +13,6 @@
 <div>${login.id }</div>
 <span>닉네임</span>
 <div>${login.nickname }</div>
-<span>비밀번호</span>
-<div>${login.upwd }</div>
 <span>이메일</span>
 <div>${login.email }</div>
 <span>권한</span>
