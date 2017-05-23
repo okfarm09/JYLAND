@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardParam;
+import project.jyland.category.dao.CategoryService;
 import project.jyland.comment.model.JYComment;
 import project.jyland.helper.Sha;
 import project.jyland.member.dao.JYUserService;
@@ -30,6 +31,9 @@ public class LoginController {
 
 	@Autowired
 	private JYUserService jYUserService;
+
+	@Autowired
+	private CategoryService categoryService;
 
 	@RequestMapping(value = "join.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String join(JYUser user, Model model) throws Exception {
@@ -76,15 +80,19 @@ public class LoginController {
 	}//
 
 	@RequestMapping(value = "myinfo.jy", method = RequestMethod.GET)
-	public String myinfo(Model model) {
+	public String myinfo(HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController myinfo! " + new Date());
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", "내 정보");
 		return "myinfo.tiles";
 	}
 
 	@RequestMapping(value = "infochange.jy", method = RequestMethod.GET)
-	public String infochange(Model model) {
+	public String infochange(HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController infochange! " + new Date());
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", "내 정보 수정");
 		return "infochange.tiles";
 	}
@@ -122,16 +130,18 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "userinfo.jy", method = RequestMethod.GET)
-	public String userinfo(String id, Model model) {
+	public String userinfo(String id, HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController userinfo " + new Date());
 		JYUser user = jYUserService.userInfo(id);
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", user.getNickname()+"의 정보");
 		model.addAttribute("userInfo", user);
 		return "userinfo.tiles";
 	}
 	
 	@RequestMapping(value = "mylist.jy", method = { RequestMethod.GET, RequestMethod.POST })
-	public String mylist(JYBoardParam param, Model model) throws Exception {
+	public String mylist(JYBoardParam param, HttpServletRequest request, Model model) throws Exception {
 		logger.info("Welcome LoginController mylist!------------------------------------------------------- " + new Date());
 
 		int sn = param.getPageNumber();
@@ -148,6 +158,8 @@ public class LoginController {
 		List<JYBoard> mylist = jYUserService.myList(param);
 		logger.info("Welcome LoginController mylist! " + mylist.size());
 
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", param.getId() + "의 전체글 보기");
 		model.addAttribute("mylist", mylist);
 
@@ -160,18 +172,20 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "mycomment.jy", method = {RequestMethod.GET, RequestMethod.POST})
-	public String mycomment(JYComment comment,Model model) {
+	public String mycomment(JYComment comment, HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController mycomment! " + new Date());
 		List<JYComment> mycomment= jYUserService.myCommentList(comment);
 		logger.info("Welcome LoginController mycomment! " + mycomment);
-		
+
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title",  comment.getId() + "의 전체 댓글 보기");
 		model.addAttribute("mycomment", mycomment);
 		return "mycomment.tiles";
 	}
 
 	@RequestMapping(value = "userlist.jy", method = {RequestMethod.GET})
-	public String userlist(JYUserParam param, Model model) {
+	public String userlist(JYUserParam param, HttpServletRequest request, Model model) {
 		logger.info("Welcome LoginController userlist!" + new Date());
 		int sn = param.getPageNumber();
 		int start = (sn) * param.getRecordCountPerPage() + 1;
@@ -187,6 +201,8 @@ public class LoginController {
 		List<JYUser> userlist = jYUserService.getUserList(param);
 		logger.info("Welcome LoginController userlist! " + userlist.size());
 
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", "회원리스트");
 		model.addAttribute("userlist", userlist);
 

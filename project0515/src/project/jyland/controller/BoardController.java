@@ -2,11 +2,7 @@ package project.jyland.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +26,7 @@ import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
+import project.jyland.category.dao.CategoryService;
 import project.jyland.helper.GetIp;
 
 @Controller
@@ -39,9 +36,12 @@ public class BoardController {
 			LoggerFactory.getLogger(BoardController.class);
 	@Autowired
 	private BoardService boardService;
+
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value = "board.jy", method = { RequestMethod.GET, RequestMethod.POST })
-	public String board(JYBoardParam param, Model model) throws Exception {
+	public String board(JYBoardParam param, HttpServletRequest request, Model model) throws Exception {
 		logger.info("Welcome BoardController board! " + new Date());
 
 		int sn = param.getPageNumber();
@@ -63,7 +63,9 @@ public class BoardController {
 		
 		List<JYBoard> LocalNoticeList = boardService.getLocalNoticeList(param);
 		logger.info("Welcome BoardController getLocalNoticeList! " + LocalNoticeList);
-		
+
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("LocalNoticeList", LocalNoticeList);
 		model.addAttribute("GlobalNoticeList", GlobalNoticeList);
 		model.addAttribute("doc_title", boardService.getCatName(param.getCatid()));
@@ -79,8 +81,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "boardwrite.jy", method = { RequestMethod.GET, RequestMethod.POST })
-	public String boardwrite(int catid, Model model) {
+	public String boardwrite(int catid, HttpServletRequest request, Model model) {
 		logger.info("Welcome BoardController freewritebefore! " + new Date());
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("catid", catid);
 		model.addAttribute("doc_title", "글쓰기");
 		return "boardwrite.tiles";
@@ -140,18 +144,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "detailupdate.jy", method = RequestMethod.POST)
-	public String detailupdate(JYBoard board, Model model) {
+	public String detailupdate(JYBoard board, HttpServletRequest request, Model model) {
 		logger.info("Welcome BoardController detailupdate " + new Date());
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("original", new JYBoardMap(board));
 		model.addAttribute("doc_title", "수정하기");
 		return "updateboard.tiles";
 	}
 	
 	@RequestMapping(value = "boarddetail.jy", method = { RequestMethod.POST, RequestMethod.GET })
-	public String freedetail(JYBoard board, Model model) {
+	public String freedetail(JYBoard board, HttpServletRequest request, Model model) {
 		logger.info("Welcome BoardController boarddetail! ---------------------------------------");
 		boardService.updateReadcount(board);
 		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("boarddetail", bm);
 		logger.info("Welcome BoardController boarddetail! " + bm);
 		return "boarddetail.tiles";

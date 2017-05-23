@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import project.jyland.category.dao.CategoryService;
 import project.jyland.message.dao.JYMessageService;
 import project.jyland.message.help.MessageHelper;
 import project.jyland.message.model.JYMessage;
@@ -23,6 +26,9 @@ public class MessageController {
 	
 	@Autowired
 	private JYMessageService jymessageService;
+
+	@Autowired
+	private CategoryService categoryService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 	
@@ -35,7 +41,7 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value = "messagelist.jy", method=RequestMethod.GET)
-	public String messagelist(JYMessageParam param, Model model) {
+	public String messagelist(JYMessageParam param, HttpServletRequest request, Model model) {
 		logger.info("Welcome MessageController messagelist " + new Date());
 		logger.info("Welcome MessageController messagelist " + param);
 		
@@ -61,6 +67,8 @@ public class MessageController {
 			msglist.add(mm);
 		}
 		logger.info("Welcome MessageController messagelist " + msglist.size());
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", "받은 쪽지 목록");
 		model.addAttribute("msglist", msglist);
 		

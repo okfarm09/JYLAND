@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardParam;
+import project.jyland.category.dao.CategoryService;
 import project.jyland.data.dao.DataService;
 import project.jyland.data.model.Region;
 
@@ -25,6 +28,9 @@ public class DataController {
 			LoggerFactory.getLogger(DataController.class);
 	@Autowired
 	private DataService regionService;
+
+	@Autowired
+	private CategoryService categoryService;
 	
 	@RequestMapping(value = "region.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody HashMap<Integer, String> region(Model model) {
@@ -38,7 +44,7 @@ public class DataController {
 	}
 	
 	@RequestMapping(value = "search.jy", method = { RequestMethod.GET, RequestMethod.POST })
-	public String search(JYBoardParam param, Model model) throws Exception {
+	public String search(JYBoardParam param, HttpServletRequest request, Model model) throws Exception {
 		logger.info("Welcome DataController search! " + new Date());
 
 		int sn = param.getPageNumber();
@@ -55,6 +61,8 @@ public class DataController {
 		List<JYBoard> searchlist = regionService.getSearchList(param);
 		logger.info("Welcome DataController search list! " + searchlist.size());
 
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
+		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		model.addAttribute("doc_title", "검색 리스트");
 		model.addAttribute("searchlist", searchlist);
 

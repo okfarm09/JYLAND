@@ -21,7 +21,7 @@ public class CommentController {
 	private static Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	@Autowired
-	CommentService CommentService;
+	private CommentService CommentService;
 	
 	@RequestMapping(value = "writeComment.jy", method = {RequestMethod.GET, RequestMethod.POST})
 	public String writeComment(JYComment comment,Model model) {
