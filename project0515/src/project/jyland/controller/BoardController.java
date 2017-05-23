@@ -2,7 +2,11 @@ package project.jyland.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,6 +104,35 @@ public class BoardController {
 		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
+		
+		String ip = null;
+		try {
+			
+			boolean isLoopBack = true;
+			Enumeration<NetworkInterface> en=NetworkInterface.getNetworkInterfaces();
+			
+			while(en.hasMoreElements()) {
+				NetworkInterface ni = en.nextElement();
+				if(ni.isLoopback()) {
+					continue;
+				}
+				Enumeration<InetAddress> inetAdress=ni.getInetAddresses();
+				while(inetAdress.hasMoreElements()) {
+					InetAddress ia=inetAdress.nextElement();
+					if(ia.getHostAddress()!=null&&ia.getHostAddress().indexOf(".")!=-1) {
+						ip=ia.getHostAddress();
+						isLoopBack=false;
+						break;
+						
+					}
+				}
+				if(!isLoopBack) {
+					break;
+				}
+			}
+		} catch(SocketException e) {
+			e.printStackTrace();
+		}
 		String tempip = request.getHeader("x-forwarded-for");
 		if(tempip==null) {
 			tempip=request.getRemoteAddr();
@@ -109,7 +142,8 @@ public class BoardController {
 		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getRemoteAddr());
 		
 		// if(dto.getIp()==""||dto.getIp().equals(null)) {
-		dto.setIp(tempip);
+		//dto.setIp(tempip);
+		dto.setIp(ip);
 		// }
 		String newFile = FUpUtil.getNewFile(f);
 		logger.info("Welcome BoardController boardwriteAf " + newFile);
