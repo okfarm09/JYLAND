@@ -30,6 +30,7 @@ import project.jyland.board.model.JYBoard;
 import project.jyland.board.model.JYBoardLHCount;
 import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
+import project.jyland.helper.GetIp;
 
 @Controller
 public class BoardController {
@@ -105,34 +106,7 @@ public class BoardController {
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
 		
-		String ip = null;
-		try {
-			
-			boolean isLoopBack = true;
-			Enumeration<NetworkInterface> en=NetworkInterface.getNetworkInterfaces();
-			
-			while(en.hasMoreElements()) {
-				NetworkInterface ni = en.nextElement();
-				if(ni.isLoopback()) {
-					continue;
-				}
-				Enumeration<InetAddress> inetAdress=ni.getInetAddresses();
-				while(inetAdress.hasMoreElements()) {
-					InetAddress ia=inetAdress.nextElement();
-					if(ia.getHostAddress()!=null&&ia.getHostAddress().indexOf(".")!=-1) {
-						ip=ia.getHostAddress();
-						isLoopBack=false;
-						break;
-						
-					}
-				}
-				if(!isLoopBack) {
-					break;
-				}
-			}
-		} catch(SocketException e) {
-			e.printStackTrace();
-		}
+		String ip = GetIp.getIp(request);
 		String tempip = request.getHeader("x-forwarded-for");
 		if(tempip==null) {
 			tempip=request.getRemoteAddr();
@@ -140,6 +114,7 @@ public class BoardController {
 		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getHeader("x-forwarded-for"));
 		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getRemoteHost());
 		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa " + request.getRemoteAddr());
+		logger.info("Wilkommen! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa IP: " + ip);
 		
 		// if(dto.getIp()==""||dto.getIp().equals(null)) {
 		//dto.setIp(tempip);
