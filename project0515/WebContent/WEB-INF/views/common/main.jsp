@@ -10,18 +10,19 @@
 	height: 50px;
 	overflow: hidden;
 	background-color: #fff;
+	border: solid 1px #000000;
 }
 
 .rolling {
 	position: relative;
-	width: 100%;
+	width: 96%;
 	height: auto;
+	padding: 1.5% 2%;
 }
 
 .rolling li {
 	width: 100%;
-	height: 50px;
-	line-height: 50px;
+	height: 100%;
 }
 </style>
 
@@ -98,7 +99,7 @@
 				if (move >= max) {
 					$(this).css("top", 0); 
 					move = 0; 
-				}
+				}	
 				;
 			});
 		}
