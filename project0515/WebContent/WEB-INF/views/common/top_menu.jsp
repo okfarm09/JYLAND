@@ -7,11 +7,19 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <div class="menu">
 	<ul class="menu_list">
-		<li><span class="top_lists" onclick="url_board(1);">자유게시판</span></li>
-		<li><span class="top_lists" onclick="url_board(2);">토론게시판</span></li>
-		<li><span class="top_lists" onclick="url_board(3);">사진게시판</span></li>
-		<li><span class="top_lists" onclick="url_board(4);">보드게시판</span></li>
-		<li><span class="top_lists" onclick="url_board(5);">신고게시판</span></li>
+		<%
+		List<JYCat> bcl=(List<JYCat>)session.getAttribute("bestcategorylist");
+		for(int i=0; i<bcl.size(); i++) {
+			%>
+			<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
+			<%
+		}
+		%>
+<!-- 		<li><span class="top_lists" onclick="url_board(1);">자유게시판</span></li> -->
+<!-- 		<li><span class="top_lists" onclick="url_board(2);">토론게시판</span></li> -->
+<!-- 		<li><span class="top_lists" onclick="url_board(3);">사진게시판</span></li> -->
+<!-- 		<li><span class="top_lists" onclick="url_board(4);">보드게시판</span></li> -->
+<!-- 		<li><span class="top_lists" onclick="url_board(5);">신고게시판</span></li> -->
 	</ul>
 	<div class="searchbox">
 		<form method="get" id="_search_form">
@@ -27,7 +35,6 @@
 	<ul class="menu_list">
 	<%
 	List<JYCat> categorylist=(List<JYCat>)session.getAttribute("categorylist");
-	System.out.println(categorylist);
 	for(int i=0; i<categorylist.size(); i++) {
 		%>
 	<li><span class="top_lists" onclick="url_board(<%=categorylist.get(i).getCatid()%>);"><%=categorylist.get(i).getCatname()%></span></li>		

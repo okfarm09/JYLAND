@@ -26,4 +26,10 @@ public class CategoryServiceImpl implements CategoryService {
 		categoryDao.createCategory(cat);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<JYCat> getPopCatList() {
+		return categoryDao.getPopCatList();
+	}
+
 }

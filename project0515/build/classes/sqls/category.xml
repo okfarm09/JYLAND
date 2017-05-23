@@ -10,6 +10,22 @@ resultType="project.jyland.board.model.JYCat">
 SELECT CATID, CATNAME FROM JYCAT WHERE CATID!=0
 </select>
 
+<select id="getPopCatList"
+resultType="project.jyland.board.model.JYCat">
+SELECT C.CATID, CATNAME, RNUM, B.CATCOUNT FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY CATID ASC) AS RNUM, 
+CATID, CATNAME FROM JYCAT WHERE CATID != 0
+) C INNER JOIN 
+(
+SELECT COUNT(CATID) AS CATCOUNT, CATID FROM JYBOARD 
+WHERE CATID != 0 AND NOTICE = 0 
+GROUP BY CATID
+) B
+ON C.CATID = B.CATID
+WHERE RNUM BETWEEN 1 AND 5 
+ORDER BY CATCOUNT DESC
+</select>
+
 <insert id="createCategory"
 parameterType="project.jyland.board.model.JYCat">
 INSERT INTO JYCAT(CATID, CATNAME) 

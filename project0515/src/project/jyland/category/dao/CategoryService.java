@@ -8,5 +8,6 @@ public interface CategoryService {
 	
 	List<JYCat> getCatList();
 	void createCategory(JYCat cat);
+	List<JYCat> getPopCatList();
 
 }

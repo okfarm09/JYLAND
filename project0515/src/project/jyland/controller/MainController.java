@@ -51,6 +51,7 @@ public class MainController {
 		model.addAttribute("noticelist", noticelist);
 		model.addAttribute("bestlist", bestlist);
 		model.addAttribute("recentlist", recentlist);
+		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
 		request.getSession().setAttribute("categorylist", categoryService.getCatList());
 		return "mainpage.tiles";
 	}//

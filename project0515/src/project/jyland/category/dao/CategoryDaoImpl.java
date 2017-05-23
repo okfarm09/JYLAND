@@ -26,4 +26,9 @@ public class CategoryDaoImpl implements CategoryDao {
 		sqlSession.insert(ns+"createCategory", cat);
 	}
 
+	@Override
+	public List<JYCat> getPopCatList() {
+		return sqlSession.selectList(ns+"getPopCatList");
+	}
+
 }
