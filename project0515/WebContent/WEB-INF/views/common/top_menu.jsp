@@ -26,7 +26,6 @@
 	</div>
 </div>
 <div id="_boards_list" style='display:none; width:100%;'>
-	<hr/>
 	<ul class="menu_list">
 	<%
 	List<JYCat> categorylist=(List<JYCat>)session.getAttribute("categorylist");
