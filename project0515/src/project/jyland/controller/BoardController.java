@@ -3,11 +3,16 @@ package project.jyland.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +33,7 @@ import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
 import project.jyland.category.dao.CategoryService;
 import project.jyland.helper.GetIp;
+import project.jyland.helper.UploadPath;
 
 @Controller
 public class BoardController {
@@ -100,7 +106,7 @@ public class BoardController {
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
 		// 리눅스용 경로
-		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		String fupload = UploadPath.NAM_PATH;
 		// ntfs에서는(현준)
 //		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		// 지윤
@@ -154,9 +160,28 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "boarddetail.jy", method = { RequestMethod.POST, RequestMethod.GET })
-	public String freedetail(JYBoard board, HttpServletRequest request, Model model) {
+	public String freedetail(JYBoard board, HttpServletRequest request, 
+			HttpServletResponse response, Model model) {
 		logger.info("Welcome BoardController boarddetail! ---------------------------------------");
-		boardService.updateReadcount(board);
+		Cookie cookies[]=request.getCookies();
+		Map<String, String> map=new HashMap<>();
+		if(cookies!=null) {
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie tempCookie=cookies[i];
+				map.put(tempCookie.getName(), tempCookie.getValue());
+				logger.info("Welcome BoardController boarddetail! -----------------------------------name "+
+				tempCookie.getName()+" value "+tempCookie.getValue());
+			}
+		}
+		String readCount=map.get("readcount_"+board.getSeq());
+		String newReadCount="readcount_"+board.getSeq();
+		if(StringUtils.indexOfIgnoreCase(readCount, newReadCount)==-1) {
+			Cookie cookie=new Cookie("readcount_"+board.getSeq(),"readcount_"+board.getSeq());
+			cookie.setMaxAge(24*60*60);
+			response.addCookie(cookie);
+			
+			boardService.updateReadcount(board);
+		}
 		JYBoardMap bm=new JYBoardMap(boardService.getBoard(board));
 		request.getSession().setAttribute("bestcategorylist", categoryService.getPopCatList());
 		request.getSession().setAttribute("categorylist", categoryService.getCatList());
@@ -178,7 +203,7 @@ public class BoardController {
 		// ntfs에서는(현준)
 		//String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		//남희석요
-		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		String fupload = UploadPath.NAM_PATH;
 		//원찬
 		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		String newFile = FUpUtil.getNewFile(f);
