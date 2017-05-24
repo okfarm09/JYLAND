@@ -61,7 +61,15 @@
 	<definition name="userlist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/userlist.jsp" />
 	</definition>
-
+	
+	<definition name="library.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/librarytitlelist.jsp" />
+	</definition>
+	
+	<definition name="newbook.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/writes/newbook.jsp" />
+	</definition>
+	
 	<definition name="test.tiles" template="/WEB-INF/views/test.jsp">
 	</definition>
 </tiles-definitions> 
