@@ -39,7 +39,7 @@
 	
 <!-- <beans:bean id="downloadView" class="com.mirhenge.jyl.pds.view.DownloadView" /> -->
 <!-- <beans:bean id="excelView" class="com.mirhenge.jyl.pds.view.ExcelBuilder" /> -->
-<!-- <beans:bean id="pdfView" class="com.mirhenge.jyl.pds.view.PDFBuilder" /> -->
+<beans:bean id="pdfView" class="project.jyland.book.views.PDFBuilder" />
 
 	<beans:bean id="downloadViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order">

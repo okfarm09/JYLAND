@@ -28,6 +28,7 @@ import project.jyland.board.model.JYBoardMap;
 import project.jyland.board.model.JYBoardParam;
 import project.jyland.category.dao.CategoryService;
 import project.jyland.helper.GetIp;
+import project.jyland.helper.UploadPath;
 
 @Controller
 public class BoardController {
@@ -100,7 +101,7 @@ public class BoardController {
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
 		// 리눅스용 경로
-		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		String fupload = UploadPath.NAM_PATH;
 		// ntfs에서는(현준)
 //		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		// 지윤
@@ -178,7 +179,7 @@ public class BoardController {
 		// ntfs에서는(현준)
 		//String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
 		//남희석요
-		String fupload = "/home/namo/ho2/git/JYLAND/project0515/WebContent/upload";
+		String fupload = UploadPath.NAM_PATH;
 		//원찬
 		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
 		String newFile = FUpUtil.getNewFile(f);

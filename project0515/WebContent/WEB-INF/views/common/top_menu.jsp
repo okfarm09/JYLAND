@@ -11,10 +11,11 @@
 		List<JYCat> bcl=(List<JYCat>)session.getAttribute("bestcategorylist");
 		for(int i=0; i<bcl.size(); i++) {
 			%>
-			<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
+		<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
 			<%
 		}
 		%>
+		<li><span class="top_lists" onclick="url_library();">서고</span></li>
 	</ul>
 	<div class="searchbox">
 		<form method="get" id="_search_form">
@@ -34,8 +35,8 @@
 	<li><span class="top_lists" onclick="url_board(<%=categorylist.get(i).getCatid()%>);"><%=categorylist.get(i).getCatname()%></span></li>		
 		<%
 		if(i%10==9) {
-			%>
-			</ul>
+		%>
+	</ul>
 	<br/><ul class="menu_list">
 			<%
 		}
@@ -52,4 +53,6 @@
 	function showboardslist() {
 		$("#_boards_list").toggle();
 	}
+	function url_library() {self.location.href = "library.jy"; return false;}
+	
 </script>
