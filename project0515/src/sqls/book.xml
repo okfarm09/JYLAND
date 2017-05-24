@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Book">
+
+<insert id="createNewBook"
+parameterType="project.jyland.book.model.JYBooktitle">
+INSERT INTO JYBOOKTITLE(
+SEQ, TITLE, ID, WDATE, UDATE
+) 
+VALUES(JYBOOKTITLE_SEQ.NEXTVAL, #{title}, #{id}, 
+SYSDATE, SYSDATE)
+</insert>
+
+<insert id="writeBook"
+parameterType="project.jyland.book.model.JYBook">
+INSERT INTO JYBOOK(
+SEQ, TITLESEQ, ID, TITLE, CONTENT, READCOUNT, 
+RATE, RATECOUNT, WDATE
+) 
+VALUES(SEQ_JYBOOK.NEXTVAL, #{titleseq}, #{id}, #{title}, #{content}, 
+0, 0, 0, SYSDATE)
+</insert>
+
+<insert id="uploadImg"
+parameterType="project.jyland.book.model.JYBookimg">
+INSERT INTO JYBOOKIMG(FILENAME, SEQ) 
+VALUES(#{filename}, #{seq})
+</insert>
+
+<insert id="setRate"
+parameterType="project.jyland.book.model.JYBookRatecount">
+INSERT INTO JYBOOKRATECOUNT(SEQ, ID) 
+VALUES(#{seq}, #{id})
+</insert>
+
+<select id="getBookTitleList"
+parameterType="project.jyland.book.model.JYBooktitleParam"
+resultType="project.jyland.book.model.JYBooktitle">
+SELECT SEQ, ID, TITLE, WDATE, UDATE 
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM,	
+SEQ, ID, TITLE, WDATE, UDATE 
+FROM JYBOOKTITLE
+) A WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getBookDetailList"
+parameterType="project.jyland.book.model.JYBookParam"
+resultType="project.jyland.book.model.JYBook">
+SELECT SEQ, TITLESEQ, ID, TITLE, CONTENT, READCOUNT, 
+RATE, RATECOUNT, WDATE 
+FROM (
+SELECT ROW_NUMBER() OVER(ORDER BY SEQ DESC) AS RNUM,	
+SEQ, TITLESEQ, ID, TITLE, 
+CONTENT, READCOUNT, RATE, RATECOUNT, WDATE 
+FROM JYBOOK
+) A WHERE RNUM BETWEEN #{start} AND #{end}
+</select>
+
+<select id="getBookTitle"
+parameterType="project.jyland.book.model.JYBooktitle"
+resultType="project.jyland.book.model.JYBooktitle">
+SELECT SEQ, ID, TITLE, WDATE, UDATE 
+FROM JYBOOKTITLE 
+WHERE SEQ=#{seq}
+</select>
+
+<select id="getBookDetail"
+parameterType="project.jyland.book.model.JYBook"
+resultType="project.jyland.book.model.JYBook">
+SELECT SEQ, TITLESEQ, ID, TITLE, CONTENT, READCOUNT, 
+RATE, RATECOUNT, WDATE 
+FROM JYBOOK WHERE SEQ=#{seq}
+</select>
+
+<select id="getBookTitleTotalCount"
+resultType="java.lang.Integer">
+SELECT NVL(COUNT(*), 0) AS CNT FROM JYBOOKTITLE
+</select>
+
+<select id="getBookDetailTotalCount"
+resultType="java.lang.Integer">
+SELECT NVL(COUNT(*), 0) AS CNT FROM JYBOOK
+</select>
+
+<select id="getImgList"
+parameterType="project.jyland.book.model.JYBook"
+resultType="project.jyland.book.model.JYBookimg">
+SELECT FILENAME, SEQ FROM JYBOOKIMG 
+WHERE SEQ=#{seq}
+</select>
+
+<select id="getRate"
+parameterType="project.jyland.book.model.JYBook"
+resultType="project.jyland.book.model.JYBook">
+SELECT RATE, RATECOUNT FROM JYBOOK WHERE SEQ=#{seq}
+</select>
+
+<select id="checkRate"
+parameterType="project.jyland.book.model.JYBookRatecount"
+resultType="java.lang.Integer">
+SELECT COUNT(*) FROM JYBOOKRATECOUNT 
+WHERE SEQ=#{seq} AND ID=#{id}
+</select>
+
+<update id="updateReadcount"
+parameterType="project.jyland.book.model.JYBook">
+UPDATE JYBOOK SET READCOUNT=READCOUNT+1 
+WHERE SEQ=#{seq}
+</update>
+
+<update id="updateRate"
+parameterType="project.jyland.book.model.JYBook">
+UPDATE JYBOOK SET RATE=#{rate}, RATECOUNT=RATECOUNT+1 
+WHERE SEQ=#{seq}
+</update>
+
+<update id="updateUdate"
+parameterType="project.jyland.book.model.JYBook">
+UPDATE JYBOOKTITLE SET UDATE=SYSDATE 
+WHERE SEQ=#{seq}
+</update>
+
+</mapper>
