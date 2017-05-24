@@ -18,7 +18,6 @@ a {
 }
 
 table {
-	border: solid 1px #c6c6c6;
 	border-collapse: collapse;
 }
 
@@ -181,8 +180,27 @@ textarea {
 
 .list_table table {
 	width: 100%;
+	border: solid 1px #c6c6c6;
 	border-left: none;
 	border-right: none;
+}
+
+.reply_table {
+	margin: 1%;	
+	width: 100%;
+}
+
+.reply_table tr {
+	height: 35px;
+}
+
+.reply_table tr:hover {
+	background : #eeeeee;
+}
+
+.reply_txt {
+	width:92%;
+	margin-right: 10px;
 }
 
 #messageWindow {
