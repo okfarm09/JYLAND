@@ -56,4 +56,12 @@ public class MainController {
 		return "mainpage.tiles";
 	}//
 	
+	@RequestMapping(value = "colorchange.jy", method = { RequestMethod.GET, RequestMethod.POST })
+	public String colorchange(HttpServletRequest request, Model model) throws Exception {
+		logger.info("Welcome MainController colorchange! " + new Date());
+		
+		model.addAttribute("doc_title", "배경색 변경");
+		return "colorchange.tiles";
+	}//
+	
 }

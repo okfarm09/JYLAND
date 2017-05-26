@@ -8,3 +8,4 @@ function url_mylist(id) {self.location.href = "mylist.jy?id="+id; return false;}
 function url_mycomment(id) {self.location.href = "mycomment.jy?id="+id; return false;} //내 댓글 보기
 function url_board(catid) {self.location.href = "board.jy?catid="+catid;  return false;} //자유게시판
 function url_boardwrite(catid) {self.location.href = "boardwrite.jy?catid="+catid; return false;} //자유게시판 글쓰기
+function change_color() {self.location.href = "colorchange.jy"; return false;} //배경색 변경

@@ -34,6 +34,7 @@
 	<span onclick="url_userlist()" class="hover_cursor">회원관리</span>
 	<span class="write_btn hover_cursor" onclick="url_boardwrite(0)" >공지글쓰기</span>
 	<span onclick="createboard_modal()" class="hover_cursor">게시판생성</span>
+	<span onclick="change_color()" class="hover_cursor">배경색 변경</span>
 </c:if>
 </div>
 </div>
