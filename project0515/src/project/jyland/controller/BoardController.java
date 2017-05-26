@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -284,5 +285,28 @@ public class BoardController {
 		lh.setHatecount(temp.getHatecount());
 		return lh;
 	}
-
+	@RequestMapping(value = "dateBoardList.jy", method = { RequestMethod.GET, RequestMethod.POST })
+	public String dateboard(Model model) {
+		logger.info("Welcome dateboard! " + new Date());
+		model.addAttribute("doc_title", "월별 게시글");
+		return "dateboardlist.tiles";
+	}
+	
+	@RequestMapping(value = "getDateBoardList.jy", method={RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<JYBoard> dateBoardList(String wdate, Model model) {
+		logger.info("Welcome BoardController dateBoardList " + new Date());
+		List<JYBoard> dbdateList = boardService.getDateBoardList();
+		List<JYBoard> dateList = new ArrayList<JYBoard>();
+		for(JYBoard bod : dbdateList){
+			String dbwd = bod.getWdate().toString();	
+			dbwd=dbwd.substring(0,7);
+			if(dbwd.equals(wdate)){
+				
+				dateList.add(bod);
+			}
+		}
+		
+		return dateList;
+	}
+	
 }

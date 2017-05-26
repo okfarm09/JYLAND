@@ -47,7 +47,6 @@ public class MainController {
 		}
 		
 		List<JYBoard> noticelist = boardService.getGlobalNoticeList();
-		
 		model.addAttribute("noticelist", noticelist);
 		model.addAttribute("bestlist", bestlist);
 		model.addAttribute("recentlist", recentlist);

@@ -27,4 +27,5 @@ public interface BoardService {
 	List<JYBoard> getLocalNoticeList(JYBoardParam param);
 	void goNotice(JYBoard board);
 	List<JYBoard> getBestList();
+	List<JYBoard> getDateBoardList( );
 }
