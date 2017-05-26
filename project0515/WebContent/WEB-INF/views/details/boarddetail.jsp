@@ -10,19 +10,68 @@
 	height: 300px;
 }
 
-.buttons {
+.box_title {
+	display: inline-block;
+	font-size: 18px;
+}
+
+.box_date {
+	display: inline-block;
 	float: right;
-	display: inline;
-	padding: 0;
-	width: 40%;
+	font-size: 12px;
+	color: #bebebe;
+	padding-top: .8%;
+}
+
+.detail_views {
+	float: right;
+	padding-right: 2%;
+	clear:both;
+}
+
+.detail_views img {
+	vertical-align: middle;
+}
+
+.detail_views span {
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.detail_content {
+	clear:both;
+	padding: 2%;
+	min-height: 30%;
+}
+
+.buttons {
+	padding: 1% 2%;
 }
 
 .buttons span {
+	float: left;
 	display: inline-block;
-	width: 15%;
 	background: #4e4e4e;
 	color: white;
 	text-align: center;
+	width:60px;
+	padding: 1%;
+	margin-right: 10px;
+}
+
+.detail_lh_btn {
+	float:left;
+	list-style: initial;
+}
+
+.detail_btn {
+	float: right;
+}
+
+.reply {
+	clear:both;
+	padding:1% 2%;
+	border-top: solid 1px #d41b1b;
 }
 
 /* ._comment_wdate { */
@@ -47,10 +96,10 @@
 			<div class="box_title">${boarddetail.title}</div>
 			<div class="box_date">${boarddetail.id} | ${boarddetail.wdate}</div>
 		</div>
-		<div class="">
-			<img src="<%=request.getContextPath()%>/img/view.gif"><span>${boarddetail.readcount}</span>
-			<img src="<%=request.getContextPath()%>/img/like.gif"><span id="_like_count">${boarddetail.likecount}</span>
-			<img src="<%=request.getContextPath()%>/img/hate.gif"><span id="_hate_count">${boarddetail.hatecount}</span>
+		<div class="detail_views">
+			<img src="<%=request.getContextPath()%>/img/view.gif">&nbsp;<span>${boarddetail.readcount}</span>&nbsp;&nbsp;&nbsp;
+			<img src="<%=request.getContextPath()%>/img/like.gif">&nbsp;<span id="_like_count">${boarddetail.likecount}</span>&nbsp;&nbsp;&nbsp;
+			<img src="<%=request.getContextPath()%>/img/hate.gif">&nbsp;<span id="_hate_count">${boarddetail.hatecount}</span>
 		</div>
 		<div class="detail_content">
 			<div>
@@ -73,20 +122,23 @@
 			<div>${boarddetail.content}</div>
 		</div>
 		<div class="buttons">
-		<c:if test="${login.auth eq 1 || login.auth eq 2}">
-			<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
-		</c:if>
-		<span onclick="like();" class=" hover_cursor">좋아요</span>
-		<span onclick="hate();" class=" hover_cursor">싫어요</span>
-		<span onclick="url_board1();" class=" hover_cursor">목록</span>
-		<c:if test="${login.id eq boarddetail.id }">
-			<span onclick="detail_update();" class=" hover_cursor">수정</span>
-			<span onclick="detail_delete();" class=" hover_cursor">삭제</span>
-		</c:if>
+			<div class="detail_lh_btn">
+				<span onclick="like();" class=" hover_cursor">좋아요</span>
+				<span onclick="hate();" class=" hover_cursor">싫어요</span>
+			</div>
+			<div class="detail_btn">
+				<c:if test="${login.auth eq 1 || login.auth eq 2}">
+					<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
+				</c:if>
+				<span onclick="url_board('${boarddetail.catid}');" class=" hover_cursor">목록</span>
+				<c:if test="${login.id eq boarddetail.id }">
+					<span onclick="detail_update();" class=" hover_cursor">수정</span>
+					<span onclick="detail_delete();" class=" hover_cursor">삭제</span>
+				</c:if>
+			</div>
 		</div>
 		<br/>
 	</div>
-	<hr>
 	<div class="reply">
 		<div class="reply_title">댓글</div>
 		<div class="reply_list"></div>
@@ -172,14 +224,14 @@ function getcomment(){
          url:"getCommentList.jy",
          data: {boardseq: "${boarddetail.seq}"},
          success : function(data) {
-            var a = "<table border='1' class='list_table' >" +
+            var a = "<table class='reply_table' >" +
             	"<colgroup>" +
 				"<col style='width: auto;' />" +
 					"<col style='width: 5%;' />" +
-					"<col style='width: 5%;' />" +
-					"<col style='width: 5%;' />" +
-					"<col style='width: 5%;' />" +
-					"<col style='width: 5%;' />" +
+					"<col style='width: 10%;' />" +
+					"<col style='width: 3%;' />" +
+					"<col style='width: 3%;' />" +
+					"<col style='width: 3%;' />" +
 				"</colgroup>"
             $.each(data,function(i,obj){
             if(obj.seqReply==0) {

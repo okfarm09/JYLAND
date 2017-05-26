@@ -27,6 +27,10 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>*.jy</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>appServlet</servlet-name>
+    <url-pattern>*.pdf</url-pattern>
+  </servlet-mapping>
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

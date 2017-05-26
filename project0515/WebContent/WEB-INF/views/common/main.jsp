@@ -6,10 +6,8 @@
 
 <style>
 .notice {
-	width: 100%;
 	height: 50px;
 	overflow: hidden;
-	background-color: #fff;
 	border: solid 1px #000000;
 }
 
@@ -24,6 +22,25 @@
 	width: 100%;
 	height: 100%;
 }
+
+.main_title {
+	font-size: 16pt;
+	margin: 10px 0 7px;
+}
+
+#best_table tr, #recent_table tr{
+	height: 25px;
+	font-size: 11pt;
+}
+
+._hover_tr>td:FIRST-CHILD {
+	color: #8f8f8f;
+	padding-right: 8px;
+}
+
+#commentCount {
+	font-size: 8pt;
+}
 </style>
 
 <div class="notice">
@@ -36,7 +53,7 @@
 </div>
 
 <div class="best_wrap">
-	<div>베스트</div>
+	<div class="main_title"><strong>베스트</strong></div>
 	<div id="best_table">
 		<table>
 			<colgroup>
@@ -51,8 +68,8 @@
 			<c:forEach items="${bestlist}" var="best">
 				<tr class="_hover_tr">
 					<td>${best.dateForMain}</td>
-					<td style="text-align: left"><b>${best.catname}</b> <a
-						href='boarddetail.jy?seq=${best.seq}'>${best.title}</a>
+					<td style="text-align: left"><b class="hover_cursor" onclick="url_board(${best.catid});">${best.catname}</b> <a
+						href='boarddetail.jy?seq=${best.seq}'>${best.title}&nbsp;</a>
 						&nbsp;&nbsp;<span id="commentCount">[${best.commentcount}]</span>
 					</td>
 				</tr>
@@ -61,7 +78,7 @@
 	</div>
 </div>
 <div class="recent_wrap">
-	<div>최신글</div>
+	<div class="main_title"><strong>최신글</strong></div>
 	<div id="recent_table">
 		<table>
 			<colgroup>

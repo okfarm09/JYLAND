@@ -12,17 +12,13 @@
 		int j =0;
 		for(int i=0; i<bcl.size(); i++) {
 			%>
-			<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
+		<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
 			<%
 			j=i+1;
 		}
 		%>
 			<li><span class="top_lists" onclick="url_dateboard()">월별 게시판</span></li>
-<!-- 		<li><span class="top_lists" onclick="url_board(1);">자유게시판</span></li> -->
-<!-- 		<li><span class="top_lists" onclick="url_board(2);">토론게시판</span></li> -->
-<!-- 		<li><span class="top_lists" onclick="url_board(3);">사진게시판</span></li> -->
-<!-- 		<li><span class="top_lists" onclick="url_board(4);">보드게시판</span></li> -->
-<!-- 		<li><span class="top_lists" onclick="url_board(5);">신고게시판</span></li> -->
+		<li><span class="top_lists" onclick="url_library();">서고</span></li>
 	</ul>
 	<div class="searchbox">
 		<form method="get" id="_search_form">
@@ -34,7 +30,6 @@
 	</div>
 </div>
 <div id="_boards_list" style='display:none; width:100%;'>
-	<hr/>
 	<ul class="menu_list">
 	<%
 	List<JYCat> categorylist=(List<JYCat>)session.getAttribute("categorylist");
@@ -43,8 +38,8 @@
 	<li><span class="top_lists" onclick="url_board(<%=categorylist.get(i).getCatid()%>);"><%=categorylist.get(i).getCatname()%></span></li>		
 		<%
 		if(i%10==9) {
-			%>
-			</ul>
+		%>
+	</ul>
 	<br/><ul class="menu_list">
 			<%
 		}
@@ -62,4 +57,6 @@
 	function showboardslist() {
 		$("#_boards_list").toggle();
 	}
+	function url_library() {self.location.href = "library.jy"; return false;}
+	
 </script>

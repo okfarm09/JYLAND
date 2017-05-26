@@ -7,9 +7,9 @@ public class MainHelper {
 	
 	public static String message(String msg) {
 		String a = "";
-		if(msg.length() > 10) {
+		if(msg.length() > 30) {
 			a += msg;
-			a = a.substring(0, 10) + "...";
+			a = a.substring(0, 30) + "...";
 		} else {
 			a = msg;
 		}
