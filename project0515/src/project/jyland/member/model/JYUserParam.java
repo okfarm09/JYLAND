@@ -11,6 +11,7 @@ public class JYUserParam implements Serializable {
 	private String nickname;
 	private String email;
 	private int auth;
+	private String api;
 	
 	private int recordCountPerPage=30;
 	private int pageNumber=0;
@@ -20,6 +21,20 @@ public class JYUserParam implements Serializable {
 	
 	public JYUserParam() {
 		super();
+	}
+	public JYUserParam(String id, String upwd, String nickname, String email, int auth, String api,
+			int recordCountPerPage, int pageNumber, int start, int end) {
+		super();
+		this.id = id;
+		this.upwd = upwd;
+		this.nickname = nickname;
+		this.email = email;
+		this.auth = auth;
+		this.api = api;
+		this.recordCountPerPage = recordCountPerPage;
+		this.pageNumber = pageNumber;
+		this.start = start;
+		this.end = end;
 	}
 	public JYUserParam(String id, String upwd, String nickname, String email, int auth) {
 		super();
@@ -108,11 +123,17 @@ public class JYUserParam implements Serializable {
 	public void setEnd(int end) {
 		this.end = end;
 	}
+	public String getApi() {
+		return api;
+	}
+	public void setApi(String api) {
+		this.api = api;
+	}
 	@Override
 	public String toString() {
 		return "JYUserParam [id=" + id + ", upwd=" + upwd + ", nickname=" + nickname + ", email=" + email + ", auth="
-				+ auth + ", recordCountPerPage=" + recordCountPerPage + ", pageNumber=" + pageNumber + ", start="
-				+ start + ", end=" + end + "]";
+				+ auth + ", api=" + api + ", recordCountPerPage=" + recordCountPerPage + ", pageNumber=" + pageNumber
+				+ ", start=" + start + ", end=" + end + "]";
 	}
 
 

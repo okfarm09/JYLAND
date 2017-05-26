@@ -11,6 +11,18 @@ INSERT INTO JYUSER(ID, UPWD, NICKNAME, EMAIL)
 VALUES(#{id}, #{upwd}, #{nickname}, #{email})
 </insert>
 
+<update id="addApi"
+parameterType="project.jyland.member.model.JYUser">
+INSERT JYUSER SET API=#{api} WHERE ID=#{id}
+</update>
+
+<select id="mobileLogin"
+parameterType="project.jyland.member.model.JYUser"
+resultType="project.jyland.member.model.JYUser">
+SELECT ID, UPWD, NICKNAME, EMAIL, AUTH, API 
+FROM JYUSER WHERE ID=#{id} AND UPWD=#{upwd}
+</select>
+
 <select id="loginUser"
 parameterType="project.jyland.member.model.JYUser"
 resultType="project.jyland.member.model.JYUser">

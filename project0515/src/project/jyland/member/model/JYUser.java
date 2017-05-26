@@ -11,6 +11,16 @@ public class JYUser implements Serializable {
 	private String nickname;
 	private String email;
 	private int auth;
+	private String api;
+	public JYUser(String id, String upwd, String nickname, String email, int auth, String api) {
+		super();
+		this.id = id;
+		this.upwd = upwd;
+		this.nickname = nickname;
+		this.email = email;
+		this.auth = auth;
+		this.api = api;
+	}
 	public JYUser() {
 		super();
 	}
@@ -64,10 +74,16 @@ public class JYUser implements Serializable {
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
+	public String getApi() {
+		return api;
+	}
+	public void setApi(String api) {
+		this.api = api;
+	}
 	@Override
 	public String toString() {
-		return "JYUser [id=" + id + ", upwd=" + upwd + ", nickname=" + nickname + ", email=" + email + ", auth="
-				+ auth + "]";
+		return "JYUser [id=" + id + ", upwd=" + upwd + ", nickname=" + nickname + ", email=" + email + ", auth=" + auth
+				+ ", api=" + api + "]";
 	}
 
 }

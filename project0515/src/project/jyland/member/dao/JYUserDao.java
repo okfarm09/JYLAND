@@ -16,6 +16,9 @@ public interface JYUserDao {
 	void updateUser(JYUser user);
 	JYUser userInfo(String id);
 	
+	void addApi();
+	JYUser mobileLogin(JYUser user);
+	
 	List<JYBoard> myList(JYBoardParam param);
 	int getMyListTotalCount(JYBoardParam param);
 	List<JYComment> myCommentList(JYComment comment);
