@@ -70,7 +70,7 @@ public class AjaxController {
 	
 	//1=현준 2=희석 3=지윤 4=원찬(경로 수정 필요)
 	private int pathNum=2;
-	
+
 	//boardService
 	@RequestMapping(value = "ajaxWriteBoard.jy", method = {RequestMethod.POST, RequestMethod.GET})
 	public @ResponseBody String ajaxWriteBoard(JYBoard board, HttpServletRequest request,
