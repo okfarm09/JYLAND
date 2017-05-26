@@ -33,5 +33,6 @@ public class AjaxController {
 	private JYUserService userService;
 	@Autowired
 	private JYMessageService messageService;
+	
 
 }
