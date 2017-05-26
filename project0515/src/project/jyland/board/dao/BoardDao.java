@@ -27,4 +27,5 @@ public interface BoardDao {
 	JYBoard getLHCount(JYBoard board);
 	int checkLikeHate(JYBoardLHCount board);
 	List<JYBoard> getBestList();
+	List<JYBoard> getDateBoardList( );
 }

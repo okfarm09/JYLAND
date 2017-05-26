@@ -90,4 +90,14 @@ public class JYUserServiceImpl implements JYUserService {
 		return jYUserDao.getAllUserList();
 	}
 
+	@Override
+	public void addApi() {
+		jYUserDao.addApi();
+	}
+
+	@Override
+	public JYUser mobileLogin(JYUser user) {
+		return jYUserDao.mobileLogin(user);
+	}
+
 }

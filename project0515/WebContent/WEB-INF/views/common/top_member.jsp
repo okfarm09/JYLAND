@@ -12,6 +12,7 @@
 		<span id="_login" onclick='url_my_info();'>MY INFO</span>
 		<span id="_login" onclick='url_logout();'>LOGOUT</span>
 	</c:if>
+	
 </div>
 <div id="_joinsung" class="modal">
 	<span onclick='$("#_joinsung").css("display", "none")' class="close"

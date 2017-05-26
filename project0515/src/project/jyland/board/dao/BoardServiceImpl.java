@@ -124,5 +124,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getBestList();
 	}
 
+	@Override
+	public List<JYBoard> getDateBoardList( ) {
+	 
+		return boardDao.getDateBoardList( );
+	}
+
 
 }

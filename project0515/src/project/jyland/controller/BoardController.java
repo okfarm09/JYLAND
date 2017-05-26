@@ -2,6 +2,7 @@ package project.jyland.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,9 @@ public class BoardController {
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	//1=현준 2=희석 3=지윤 4=원찬(경로 수정 필요)
+	private int pathNum=2;
 	
 	@RequestMapping(value = "board.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String board(JYBoardParam param, HttpServletRequest request, Model model) throws Exception {
@@ -105,14 +109,8 @@ public class BoardController {
 		logger.info("Welcome BoardController boardwriteAf! " + new Date());
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
-		// 리눅스용 경로
-		String fupload = UploadPath.NAM_PATH;
-		// ntfs에서는(현준)
-//		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
-		// 지윤
-		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
-		//원찬
-		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
+		// 임시 경로
+		String fupload = UploadPath.getPath(pathNum);
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
 		
@@ -198,14 +196,8 @@ public class BoardController {
 		String f=board.getUpload();
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
-		// 지윤
-		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
-		// ntfs에서는(현준)
-		//String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
-		//남희석요
-		String fupload = UploadPath.NAM_PATH;
-		//원찬
-		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
+		//임시 경로
+		String fupload = UploadPath.getPath(pathNum);
 		String newFile = FUpUtil.getNewFile(f);
 		logger.info(fupload + "/" + newFile);
 		if(newFile.contains("back")) {
@@ -317,5 +309,28 @@ public class BoardController {
 		lh.setHatecount(temp.getHatecount());
 		return lh;
 	}
-
+	@RequestMapping(value = "dateBoardList.jy", method = { RequestMethod.GET, RequestMethod.POST })
+	public String dateboard(Model model) {
+		logger.info("Welcome dateboard! " + new Date());
+		model.addAttribute("doc_title", "월별 게시글");
+		return "dateboardlist.tiles";
+	}
+	
+	@RequestMapping(value = "getDateBoardList.jy", method={RequestMethod.POST,RequestMethod.GET})
+	public @ResponseBody List<JYBoard> dateBoardList(String wdate, Model model) {
+		logger.info("Welcome BoardController dateBoardList " + new Date());
+		List<JYBoard> dbdateList = boardService.getDateBoardList();
+		List<JYBoard> dateList = new ArrayList<JYBoard>();
+		for(JYBoard bod : dbdateList){
+			String dbwd = bod.getWdate().toString();	
+			dbwd=dbwd.substring(0,7);
+			if(dbwd.equals(wdate)){
+				
+				dateList.add(bod);
+			}
+		}
+		
+		return dateList;
+	}
+	
 }

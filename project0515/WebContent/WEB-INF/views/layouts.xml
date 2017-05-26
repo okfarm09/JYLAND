@@ -7,63 +7,84 @@
 		<put-attribute name="common" value="/WEB-INF/views/common/common.jsp" />
 		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
 		<put-attribute name="top_inc" value="/WEB-INF/views/common/top.jsp" />
-		<put-attribute name="top_member" value="/WEB-INF/views/common/top_member.jsp" />
+		<put-attribute name="top_member"
+			value="/WEB-INF/views/common/top_member.jsp" />
 		<put-attribute name="top_menu" value="/WEB-INF/views/common/top_menu.jsp" />
 		<put-attribute name="main" value="/WEB-INF/views/common/main.jsp" />
-		<put-attribute name="bottom_inc" value="/WEB-INF/views/common/bottom_inc.jsp" />
-		<put-attribute name="chat_addon" value="/WEB-INF/views/common/chat_addon.jsp" />
+		<put-attribute name="bottom_inc"
+			value="/WEB-INF/views/common/bottom_inc.jsp" />
+		<put-attribute name="chat_addon"
+			value="/WEB-INF/views/common/chat_addon.jsp" />
 	</definition>
-	
+
 	<definition name="updateboard.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/update/updateboard.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/update/updateboard.jsp" />
 	</definition>
-	
+
 	<definition name="boardlist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/boardlist.jsp" />
 	</definition>
 	
+	<definition name="dateboardlist.tiles" extends="mainpage.tiles">
+		<put-attribute name="main"
+			value="/WEB-INF/views/lists/dateboardlist.jsp" />
+	</definition>
+
 	<definition name="boardwrite.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/writes/boardwrite.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/writes/boardwrite.jsp" />
 	</definition>
-	
+
 	<definition name="boarddetail.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/details/boarddetail.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/details/boarddetail.jsp" />
 	</definition>
-	
+
 	<definition name="myinfo.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/info/myinfo.jsp" />
 	</definition>
-	
+
 	<definition name="infochange.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/info/infochange.jsp" />
 	</definition>
-	
+
 	<definition name="userinfo.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/info/userinfo.jsp" />
 	</definition>
-	
+
 	<definition name="searchlist.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/lists/searchlist.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/lists/searchlist.jsp" />
 	</definition>
-	
+
 	<definition name="mylist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/mylist.jsp" />
 	</definition>
-	
+
 	<definition name="mycomment.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/mycomment.jsp" />
 	</definition>
-	
+
 	<definition name="messagelist.tiles" extends="mainpage.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/lists/messagelist.jsp" />
+		<put-attribute name="main"
+			value="/WEB-INF/views/lists/messagelist.jsp" />
 	</definition>
-	
+
 	<definition name="userlist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/userlist.jsp" />
 	</definition>
 
 	<definition name="colorchange.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/info/colorchange.jsp" />
+	</definition>
+	
+	<definition name="library.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/lists/librarytitlelist.jsp" />
+	</definition>
+	
+	<definition name="newbook.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/writes/newbook.jsp" />
 	</definition>
 	
 	<definition name="test.tiles" template="/WEB-INF/views/test.jsp">

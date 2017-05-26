@@ -130,7 +130,7 @@
 				<c:if test="${login.auth eq 1 || login.auth eq 2}">
 					<span onclick="detail_goNotice()" class=" hover_cursor">공지로</span>
 				</c:if>
-				<span onclick="url_board1();" class=" hover_cursor">목록</span>
+				<span onclick="url_board('${boarddetail.catid}');" class=" hover_cursor">목록</span>
 				<c:if test="${login.id eq boarddetail.id }">
 					<span onclick="detail_update();" class=" hover_cursor">수정</span>
 					<span onclick="detail_delete();" class=" hover_cursor">삭제</span>

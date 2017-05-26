@@ -79,4 +79,14 @@ public class JYUserDaoImpl implements JYUserDao {
 		return sqlSession.selectList(ns+"getAllUserList");
 	}
 
+	@Override
+	public void addApi() {
+		sqlSession.update(ns+"addApi");
+	}
+
+	@Override
+	public JYUser mobileLogin(JYUser user) {
+		return sqlSession.selectOne(ns+"mobileLogin", user);
+	}
+
 }

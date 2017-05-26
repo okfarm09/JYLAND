@@ -106,4 +106,10 @@ public class BoardDaoImpl implements BoardDao {
 	public List<JYBoard> getBestList() {
 		return sqlSession.selectList(ns+"getBestList");
 	}
+
+	@Override
+	public List<JYBoard> getDateBoardList() {
+		 
+		return sqlSession.selectList(ns+"getDateBoardList");
+	}
 }

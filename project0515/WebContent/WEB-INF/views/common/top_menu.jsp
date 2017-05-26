@@ -9,12 +9,15 @@
 	<ul class="menu_list">
 		<%
 		List<JYCat> bcl=(List<JYCat>)session.getAttribute("bestcategorylist");
+		int j =0;
 		for(int i=0; i<bcl.size(); i++) {
 			%>
 		<li><span class="top_lists" onclick="url_board(<%=bcl.get(i).getCatid()%>);"><%=bcl.get(i).getCatname()%></span></li>	
 			<%
+			j=i+1;
 		}
 		%>
+			<li><span class="top_lists" onclick="url_dateboard()">월별 게시판</span></li>
 		<li><span class="top_lists" onclick="url_library();">서고</span></li>
 	</ul>
 	<div class="searchbox">
@@ -47,6 +50,7 @@
 	<br/><br/>
 </div>
 <script type="text/javascript">
+	function url_dateboard() {self.location.href = "dateBoardList.jy";  return false;}
 	function search() {
 		$("#_search_form").attr("action", "search.jy").submit();
 	}

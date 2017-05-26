@@ -154,4 +154,10 @@ ORDER BY LIKECOUNT DESC
 WHERE RNUM BETWEEN 1 AND 20
 </select>
 
+<select id="getDateBoardList"
+parameterType="project.jyland.board.model.JYBoard"
+resultType="project.jyland.board.model.JYBoard">
+SELECT SEQ, ID, TITLE, WDATE FROM JYBOARD
+</select>
+
 </mapper>
