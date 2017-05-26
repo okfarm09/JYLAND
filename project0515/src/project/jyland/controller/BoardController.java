@@ -47,6 +47,9 @@ public class BoardController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//1=현준 2=희석 3=지윤 4=원찬(경로 수정 필요)
+	private int pathNum=2;
+	
 	@RequestMapping(value = "board.jy", method = { RequestMethod.GET, RequestMethod.POST })
 	public String board(JYBoardParam param, HttpServletRequest request, Model model) throws Exception {
 		logger.info("Welcome BoardController board! " + new Date());
@@ -106,14 +109,8 @@ public class BoardController {
 		logger.info("Welcome BoardController boardwriteAf! " + new Date());
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
-		// 리눅스용 경로
-		String fupload = UploadPath.NAM_PATH;
-		// ntfs에서는(현준)
-//		String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
-		// 지윤
-		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
-		//원찬
-		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
+		// 임시 경로
+		String fupload = UploadPath.getPath(pathNum);
 		logger.info(": " + fupload);
 		String f = dto.getUpload();
 		
@@ -199,14 +196,8 @@ public class BoardController {
 		String f=board.getUpload();
 		// 실제 서버용
 		// String fupload = request.getServletContext().getRealPath("/upload");
-		// 지윤
-		//String fupload = "C:\\Users\\JY\\git\\JYLAND\\project0515\\WebContent\\upload";
-		// ntfs에서는(현준)
-		//String fupload = "C:\\Users\\Jermy\\git\\JYLAND\\project0515\\WebContent\\upload";
-		//남희석요
-		String fupload = UploadPath.NAM_PATH;
-		//원찬
-		//String fupload = "F:\\git\\JYLAND\\project0515\\WebContent\\upload ";
+		//임시 경로
+		String fupload = UploadPath.getPath(pathNum);
 		String newFile = FUpUtil.getNewFile(f);
 		logger.info(fupload + "/" + newFile);
 		if(newFile.contains("back")) {

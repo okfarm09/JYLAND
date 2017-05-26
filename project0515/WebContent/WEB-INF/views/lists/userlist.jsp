@@ -21,18 +21,9 @@
 	<div class="doc_title">${doc_title}</div>
 	<div class="list_table">
 		<table>
-			<colgroup>
-				<col style="width: 20%;" />
-				<col style="width: auto;" />
-				<col style="width: 5%;" />
-				<col style="width: 5%;" />
-				<col style="width: 5%;" />
-				<col style="width: 5%;" />
-			</colgroup>
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>PASSWORD</th>
 					<th>NICKNAME</th>
 					<th>EMAIL</th>
 					<th>AUTH</th>
@@ -47,10 +38,9 @@
 				</c:if>
 				<c:forEach items="${userlist}" var="user" varStatus="vs">
 					<tr class="_hover_tr">
-						<td style="text-align: left"><a
+						<td style="text-align: center"><a
 							href='userinfo.jy?id=${user.id}'> ${user.id}</a>
 							</td>
-						<td>${user.upwd}</td>
 						<td>${user.nickname}</td>
 						<td>${user.email}</td>
 						<td>

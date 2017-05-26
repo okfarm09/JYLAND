@@ -74,6 +74,10 @@
 	<definition name="userlist.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/userlist.jsp" />
 	</definition>
+
+	<definition name="colorchange.tiles" extends="mainpage.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/info/colorchange.jsp" />
+	</definition>
 	
 	<definition name="library.tiles" extends="mainpage.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/lists/librarytitlelist.jsp" />
