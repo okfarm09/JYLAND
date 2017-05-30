@@ -1,8 +1,6 @@
+/log4j.xml
 /project/
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
+/project_sql.sql
+/properties/
 /sqls/
->>>>>>> branch 'master' of https://github.com/okfarm09/JYLAND.git
->>>>>>> branch 'master' of https://github.com/okfarm09/JYLAND.git
+/프로젝트 todo.txt
